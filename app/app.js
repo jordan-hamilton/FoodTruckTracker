@@ -11,6 +11,7 @@ var foodTrucksRouter = require('./routes/foodTrucks');
 var customersRouter = require('./routes/customers');
 var locationsRouter = require('./routes/locations');
 var reviewsRouter = require('./routes/reviews');
+var customersFoodTrucksRouter = require('./routes/customersFoodTrucks');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/food-trucks', foodTrucksRouter);
 app.use('/customers', customersRouter);
 app.use('/locations', locationsRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/customers-food-trucks', customersFoodTrucksRouter);
 
 // Catch 404 errors
 app.use(function(req, res, next) {
