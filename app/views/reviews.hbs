@@ -1,0 +1,30 @@
+<h1>{{title}}</h1>
+<a href="/">← Go back</a>
+<form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
+    <fieldset>
+        <legend>Create a new food truck review</legend>
+        <select name="food_truck_id">
+            <option value="1">Basic Kneads Pizza</option>
+            <option value="2">Biker Jim's Gourmet Dogs</option>
+        </select>
+        <br>
+        <select name="location_id">
+            <option value="1">Civic Center Park</option>
+            <option value="2">16th Street Mall</option>
+        </select>
+        <br>
+        <label>Date Visited
+            <input type="date" name="date">
+        </label>
+        <br>
+        <label>Title
+            <input type="text" name="title">
+        </label>
+        <br>
+        <label>Description
+            <textarea name="description" cols="40" rows="5"></textarea>
+        </label>
+        <br>
+        <input type="submit" value="Submit review">
+    </fieldset>
+</form>
