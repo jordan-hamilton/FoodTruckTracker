@@ -3,26 +3,39 @@
 <form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
     <fieldset>
         <legend>Create a new food truck review</legend>
-        <select name="food_truck_id">
-            <option value="1">Basic Kneads Pizza</option>
-            <option value="2">Biker Jim's Gourmet Dogs</option>
+        Food Truck
+        <select name="food_truck_id" required>
+            <option value=""></option>
+            <option value="1">Pecos Pit Bar-B-Que</option>
+            <option value="2">NaanSense</option>
+            <option value="4">Biker Jim's Gourmet Dogs</option>
+            <option value="5">Migration Taco</option>
         </select>
         <br>
+        Location Visited
         <select name="location_id">
+            <option value=""></option>
             <option value="1">Civic Center Park</option>
-            <option value="2">16th Street Mall</option>
+            <option value="2">Coors Field</option>
+            <option value="3">Thomas and 9th</option>
+            <option value="4">Denny Park</option>
+            <option value="5">1stBank Center</option>
         </select>
         <br>
         <label>Date Visited
-            <input type="date" name="date">
+            <input type="date" name="date" required>
+        </label>
+        <br>
+        <label>Rating
+            <input type="number" name="rating" min="1" max="5" step="1">
         </label>
         <br>
         <label>Title
-            <input type="text" name="title">
+            <input type="text" name="title" required>
         </label>
         <br>
         <label>Description
-            <textarea name="description" cols="40" rows="5"></textarea>
+            <textarea name="description" cols="100" rows="5"></textarea>
         </label>
         <br>
         <input type="submit" value="Submit review">
