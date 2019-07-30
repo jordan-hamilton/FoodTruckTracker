@@ -1,0 +1,26 @@
+<h1>{{title}}</h1>
+<a href="/">← Go back</a>
+<form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
+    <fieldset>
+        <legend>Create a new customer-food truck relationship</legend>
+        Customer
+        <select name="customer" autofocus required>
+            <option value=""></option>
+            <option value="1">Michaela Rose</option>
+            <option value="2">Anila Freeman</option>
+            <option value="3">Bryan Barnes</option>
+            <option value="4">Alvin Willis</option>
+            <option value="5">Fred Harper</option>
+        </select>
+        <br>
+        Food Truck
+        <select name="foodtruck" required>
+            <option value=""></option>
+            <option value="1">Pecos Pit Bar-B-Que</option>
+            <option value="2">NaanSense</option>
+            <option value="4">Biker Jim's Gourmet Dogs</option>
+            <option value="5">Migration Taco</option>
+        </select>
+        <input type="submit" value="Create relationship">
+    </fieldset>
+</form>

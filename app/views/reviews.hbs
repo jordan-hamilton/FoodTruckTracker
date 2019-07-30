@@ -1,0 +1,123 @@
+<h1>{{title}}</h1>
+<a href="/">← Go back</a>
+<form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
+    <fieldset>
+        <legend>Create a new food truck review</legend>
+        Food Truck
+        <select name="food_truck_id" required>
+            <option value=""></option>
+            <option value="1">Pecos Pit Bar-B-Que</option>
+            <option value="2">NaanSense</option>
+            <option value="4">Biker Jim's Gourmet Dogs</option>
+            <option value="5">Migration Taco</option>
+        </select>
+        <br>
+        Location Visited
+        <select name="location_id">
+            <option value=""></option>
+            <option value="1">Civic Center Park</option>
+            <option value="2">Coors Field</option>
+            <option value="3">Thomas and 9th</option>
+            <option value="4">Denny Park</option>
+            <option value="5">1stBank Center</option>
+        </select>
+        <br>
+        <label>Date Visited
+            <input type="date" name="date" required>
+        </label>
+        <br>
+        <label>Rating
+            <input type="number" name="rating" min="1" max="5" step="1">
+        </label>
+        <br>
+        <label>Title
+            <input type="text" name="title" required>
+        </label>
+        <br>
+        <label>Description
+            <textarea name="description" cols="100" rows="5"></textarea>
+        </label>
+        <br>
+        <input type="submit" value="Submit review">
+    </fieldset>
+</form>
+<br>
+Only show reviews for
+<select name="foodtruckIdInput" required>
+    <option value=""></option>
+    <option value="1">Pecos Pit Bar-B-Que</option>
+    <option value="2">NaanSense</option>
+    <option value="4">Biker Jim's Gourmet Dogs</option>
+    <option value="5">Migration Taco</option>
+</select>
+<br>
+Only show reviews with a rating of at least
+<select name="minRatingInput" required>
+    <option value=""></option>
+    <option value="5">5</option>
+    <option value="4">4</option>
+    <option value="3">3</option>
+    <option value="2">2</option>
+    <option value="1">1</option>
+</select>
+<br>
+Only show reviews written by
+<input type="search" placeholder="Username" spellcheck="false">
+<br>
+<button>Filter</button>
+<br>
+<a id="reset" href="#reset">Reset filters</a>
+<table>
+    <caption>Reviews</caption>
+    <thead>
+    <tr>
+        <td>Username</td>
+        <td>Date</td>
+        <td>Rating</td>
+        <td>Food Truck</td>
+        <td>Title</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>michaelarose40</td>
+        <td>2019-05-29</td>
+        <td>3</td>
+        <td>NaanSense</td>
+        <td>Pretty good Desi food for Seattle</td>
+        <td>Pro tip: the dishes near the bottom of the ever changing menu are the spiciest. If you are looking for authentic flavors, this one isn't too bad!</td>
+        <td><input type="submit" value="Update"></td>
+    </tr>
+    <tr>
+        <td>michaelarose40</td>
+        <td>2019-07-23</td>
+        <td>4</td>
+        <td>Pecos Pit Bar-B-Que</td>
+        <td>Straight forward, juicy barbeque</td>
+        <td>The portions were just right. I had chicken with spicy sauce on a baked potato, and it was delicious. I would recommend this to a friend.</td>
+        <td><input type="submit" value="Update"></td>
+    </tr>
+    <tr>
+        <td>bbarnes</td>
+        <td>2019-07-27</td>
+        <td>5</td>
+        <td>Biker Jim's Gourmet Dogs</td>
+        <td>My favorite food truck. Soooo goood!</td>
+        <td></td>
+        <td><input type="submit" value="Update"></td>
+    </tr>
+    <tr>
+        <td>freddie87</td>
+        <td>2019-06-14</td>
+        <td>4</td>
+        <td>Biker Jim's Gourmet Dogs</td>
+        <td>T.R.O.U.B.L.E.</td>
+        <td>Yep I can spell it and get into it... a lot at Biker Jim's.
+            The menu is incredible, creative, and mesmerizing as it took me a good 10 minutes himming and hawing over which delicious dog would be all mine.
+            I settled on the pheasant which was sweet and sassy. I also got the cauliflower dish which is a can't miss and healthy to boot!!
+            I loved the mystery brand soda fountain and hopes it continues to remain a mystery. I can't wait however to try the lavender soda I saw in the fridge, next time!!</td>
+        <td><input type="submit" value="Update"></td>
+    </tr>
+    </tbody>
+</table>
