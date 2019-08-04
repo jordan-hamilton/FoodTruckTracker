@@ -1,5 +1,4 @@
 <h1>{{title}}</h1>
-<a href="/">← Go back</a>
 <form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
     <fieldset>
         <legend>Add a new location</legend>
@@ -26,52 +25,11 @@
         <input type="submit" value="Add this location">
     </fieldset>
 </form>
-<table>
-    <caption>Locations</caption>
-    <thead>
-    <tr>
-        <td>Name</td>
-        <td>Address</td>
-        <td>City</td>
-        <td>State</td>
-        <td>Zip Code</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Civic Center Park</td>
-        <td>Broadway and Colfax Ave</td>
-        <td>Denver</td>
-        <td>CO</td>
-        <td>80202</td>
-    </tr>
-    <tr>
-        <td>Coors Field</td>
-        <td>2001 Blake St.</td>
-        <td>Denver</td>
-        <td>CO</td>
-        <td>80205</td>
-    </tr>
-    <tr>
-        <td>Thomas and 9th</td>
-        <td>235 9th Ave. N.</td>
-        <td>Seattle</td>
-        <td>WA</td>
-        <td>98109</td>
-    </tr>
-    <tr>
-        <td>Denny Park</td>
-        <td>100 Dexter Ave. N.</td>
-        <td>Seattle</td>
-        <td>WA</td>
-        <td>98109</td>
-    </tr>
-    <tr>
-        <td>1stBank Center</td>
-        <td>11450 Broomfield Ln.</td>
-        <td>Broomfield</td>
-        <td>CO</td>
-        <td>80021</td>
-    </tr>
-    </tbody>
-</table>
+<br>
+{{#each location}}
+    <address>
+        <strong>{{name}}</strong><br>
+        {{address}}<br>
+    {{city}}, {{state}} {{zip}}<br>
+    </address>
+{{/each}}
