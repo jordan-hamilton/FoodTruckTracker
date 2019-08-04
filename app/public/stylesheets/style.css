@@ -1,6 +1,28 @@
 body {
-  padding: 50px;
   font: 14px 'Avenir Next', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/*Main content styling*/
+#app {
+  padding: 50px 50px;
+}
+
+/*Navigation bar*/
+#nav {
+  background-color: #00447c;
+  color: white;
+  padding: 10px 10px;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+
+/*Navigation icons*/
+#nav>a>img {
+  height: 20px;
+  color: white;
+  padding: 0px 10px;
 }
 
 a {
@@ -14,3 +36,4 @@ caption {
 thead {
   font-weight: bold;
 }
+
