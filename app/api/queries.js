@@ -34,7 +34,7 @@ const getCustomers = function (request, response) {
 const addCustomer = function (request, response) {
     secret = credentials.secret;
     pool
-        .query('INSERT INTO `Customers` (`username`, `firstname`, `lastname`,   `email`, `password`) VALUES (?, ?, ?, ?, AES_ENCRYPT(?, ?))', 
+        .query('INSERT INTO Customers (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, AES_ENCRYPT(?, ?))', 
         [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.body.password, credentials.secret])
         .then(function (row) {
             console.log(row);
@@ -66,7 +66,7 @@ const getFoodTrucks = function (request, response) {
 // Add a food truck
 const addFoodTruck = function (request, response) {
     pool
-        .query('INSERT INTO `FoodTrucks` (`name`, `description`, `location`) VALUES (?, ?, ?)', 
+        .query('INSERT INTO FoodTrucks (name, description, location) VALUES (?, ?, ?)', 
         [request.body.name, request.body.description, request.body.location])
         .then(function (row) {
             console.log(row);
@@ -92,6 +92,21 @@ const getLocations = function (request, response) {
         });
 };
 
+// Add a new location
+const addLocation = function (request, response) {
+    pool
+        .query('INSERT INTO Locations (name, address, city, state, zip) VALUES (?, ?, ?, ?, ?)', 
+        [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });  
+};
+
 // Select all review data
 const getReviews = function (request, response) {
     pool
@@ -115,8 +130,9 @@ const getReviews = function (request, response) {
 module.exports = {
     getCustomers,
     addCustomer,
-    getLocations,
     getFoodTrucks,
     addFoodTruck,
+    getLocations, 
+    addLocation,
     getReviews
 }

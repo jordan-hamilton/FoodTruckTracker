@@ -18,6 +18,9 @@ router.post('/food-trucks', api.addFoodTruck);
 /* GET all locations. */
 router.get('/locations', api.getLocations);
 
+/* POST a new location */
+router.post('/locations', api.addLocation);
+
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);
 
