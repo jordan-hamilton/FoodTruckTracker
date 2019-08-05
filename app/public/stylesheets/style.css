@@ -7,17 +7,6 @@ body {
   padding: 50px 50px;
 }
 
-/*Navigation bar*/
-#nav {
-  background-color: #00447c;
-  color: white;
-  padding: 10px 10px;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 1000;
-}
-
 /*Navigation icons*/
 .nav-icon {
   height: 20px;
