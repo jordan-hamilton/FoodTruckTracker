@@ -28,7 +28,7 @@ INNER JOIN Locations AS loc ON loc.id = ft.location;
 -- Select all food trucks at a specified location 
 SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip
 FROM FoodTrucks AS ft
-INNER JOIN Locations AS loc ON loc.id = ft.location;
+INNER JOIN Locations AS loc ON loc.id = ft.location
 WHERE ft.location = :locationIdInput
 
 --
@@ -52,7 +52,7 @@ SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name 
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
 INNER JOIN Locations AS loc ON loc.id = rev.location
-INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck;
+INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
 WHERE rev.rating >= :minRatingInput;
 
 -- Select all reviews from table `Reviews` from the specified customer
@@ -60,7 +60,7 @@ SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name 
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
 INNER JOIN Locations AS loc ON loc.id = rev.location
-INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck;
+INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
 WHERE cust.id = :customerIdInput;
 
 -- Select all reviews for a specified food truck
