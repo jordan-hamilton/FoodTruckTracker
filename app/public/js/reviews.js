@@ -17,7 +17,6 @@ function bindSubmitButton() {
         payload.rating = document.getElementById('rating').value;
         payload.title = document.getElementById('title').value;
         payload.description = document.getElementById('description').value;
-        console.log(payload);//DEBUG
 
         request.open('POST', '/api/reviews', true);
         request.setRequestHeader('Content-Type', 'application/json');
