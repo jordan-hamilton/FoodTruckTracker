@@ -1,42 +1,42 @@
-<h1>{{title}}</h1>
-<a href="/">← Go back</a>
 <form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
-    <fieldset>
-        <legend>Create a new food truck review</legend>
-        Food Truck
-        <select name="food_truck_id" required>
-            <option value=""></option>
-            {{#each foodTruck}}
-                <option value="{{ft_id}}">{{ft_name}}</option>
-            {{/each}}
-        </select>
-        <br>
-        Location Visited
-        <select name="location_id">
-            <option value=""></option>
-            {{#each location}}
-                <option value="{{id}}">{{name}}</option>
-            {{/each}}
-        </select>
-        <br>
-        <label>Date Visited
-            <input type="date" name="date" required>
-        </label>
-        <br>
-        <label>Rating
-            <input type="number" name="rating" min="1" max="5" step="1">
-        </label>
-        <br>
-        <label>Title
-            <input type="text" name="title" required>
-        </label>
-        <br>
-        <label>Description
-            <textarea name="description" cols="100" rows="5"></textarea>
-        </label>
-        <br>
-        <input type="submit" value="Submit review">
-    </fieldset>
+    <div class="form-group">
+        <fieldset>
+            <legend>Write a new food truck review</legend>
+            Food Truck
+            <select name="food_truck_id" required>
+                <option value=""></option>
+                {{#each foodTruck}}
+                    <option value="{{ft_id}}">{{ft_name}}</option>
+                {{/each}}
+            </select>
+            <br>
+            Location Visited
+            <select name="location_id">
+                <option value=""></option>
+                {{#each location}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <br>
+            <label>Date Visited
+                <input type="date" name="date" required>
+            </label>
+            <br>
+            <label>Rating
+                <input type="number" name="rating" min="1" max="5" step="1">
+            </label>
+            <br>
+            <label>Title
+                <input type="text" name="title" required>
+            </label>
+            <br>
+            <label>Description
+                <textarea name="description" cols="100" rows="5"></textarea>
+            </label>
+            <br>
+            <input type="submit" value="Submit review">
+        </fieldset>
+    </div>
 </form>
 <br>
 Only show reviews for
