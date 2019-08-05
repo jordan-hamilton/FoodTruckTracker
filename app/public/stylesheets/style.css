@@ -19,7 +19,7 @@ body {
 }
 
 /*Navigation icons*/
-#nav>a>img {
+.nav-icon {
   height: 20px;
   color: white;
   padding: 0px 10px;
