@@ -127,6 +127,21 @@ const getReviews = function (request, response) {
         });
 };
 
+// Add a new review
+const addReview = function (request, resonse) {
+    pool
+        .query('INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [request.body.customer, request.body.date, request.body.title, request.body.rating, request.body.foodtruck_id, request.body.location_id, request.body.description])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+}
+
 module.exports = {
     getCustomers,
     addCustomer,
@@ -134,5 +149,6 @@ module.exports = {
     addFoodTruck,
     getLocations, 
     addLocation,
-    getReviews
+    getReviews, 
+    addReview
 }

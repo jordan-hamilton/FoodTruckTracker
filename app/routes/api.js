@@ -24,4 +24,7 @@ router.post('/locations', api.addLocation);
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);
 
+/* POST a new review */
+router.post('/reviews', api.addReview);
+
 module.exports = router;
