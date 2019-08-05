@@ -1,5 +1,3 @@
-<h1>{{title}}</h1>
-<a href="/">← Go back</a>
 <form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
     <fieldset>
         <legend>Add a new food truck</legend>
@@ -24,6 +22,20 @@
         <input type="submit" value="Add this food truck">
     </fieldset>
 </form>
+<div class="container">
+    <div class="row">
+        {{#each foodTruck}}
+            <div class="card col-md-6">
+                <img src="https://maps.googleapis.com/maps/api/staticmap?markers={{loc_address}},{{loc_city}}+{{loc_state}}&zoom=14&size=600x300&format=PNG&maptype=roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo" class="card-img-top" alt="{{loc_name}}">
+                <div class="card-body">
+                    <h4 class="card-title">{{ft_name}}</h4>
+                    <p class="card-text">{{ft_description}}</p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+<!--
 <table>
     <caption>Food Trucks</caption>
     <thead>
@@ -60,3 +72,4 @@
     </tr>
     </tbody>
 </table>
+!-->

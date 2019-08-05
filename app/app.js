@@ -7,6 +7,7 @@ var logger = require('morgan');
 
 // Import routes
 var indexRouter = require('./routes/index');
+var apiRouter = require('./routes/api');
 var foodTrucksRouter = require('./routes/foodTrucks');
 var customersRouter = require('./routes/customers');
 var locationsRouter = require('./routes/locations');
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure routes
 app.use('/', indexRouter);
+app.use('/api', apiRouter);
 app.use('/food-trucks', foodTrucksRouter);
 app.use('/customers', customersRouter);
 app.use('/locations', locationsRouter);

@@ -1,5 +1,3 @@
-<h1>{{title}}</h1>
-<a href="/">← Go back</a>
 <form action="http://web.engr.oregonstate.edu/~zhangluy/tools/class-content/form_tests/check_request.php" method="post">
     <fieldset>
         <legend>Create a new customer account</legend>
@@ -36,30 +34,13 @@
     </tr>
     </thead>
     <tbody>
+        {{#each customer}}
+            <tr>
+                <td>{{username}}</td>
+                <td>{{firstname}}</td>
+                <td>{{lastname}}</td>
+            </tr>
+        {{/each}}
     <tr>
-        <td>michaelarose40</td>
-        <td>Michaela</td>
-        <td>Rose</td>
-    </tr>
-    <tr>
-        <td>amazinganila</td>
-        <td>Anila</td>
-        <td>Freeman</td>
-    </tr>
-    <tr>
-        <td>bbarnes</td>
-        <td>Bryan</td>
-        <td>Barnes</td>
-    </tr>
-    <tr>
-        <td>alvinw</td>
-        <td>Alvin</td>
-        <td>Willis</td>
-    </tr>
-    <tr>
-        <td>freddie87</td>
-        <td>Fred</td>
-        <td>Harper</td>
-    </tr>
     </tbody>
 </table>
