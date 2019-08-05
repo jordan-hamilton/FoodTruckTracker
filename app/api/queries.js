@@ -39,12 +39,11 @@ const addCustomer = function (request, response) {
         .then(function (row) {
             console.log(row);
             response.status(200);
-            response.send("Inserted ID: " + row.insertId);
+            response.send('Inserted ID: ' + row.insertId);
         })
         .catch(function(err) {
             response.status(500);
         });
-
 };
 
 // Select all food truck data
@@ -58,6 +57,21 @@ const getFoodTrucks = function (request, response) {
             console.log(rows);
             response.status(200);
             response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Add a food truck
+const addFoodTruck = function (request, response) {
+    pool
+        .query('INSERT INTO `FoodTrucks` (`name`, `description`, `location`) VALUES (?, ?, ?)', 
+        [request.body.name, request.body.description, request.body.location])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send('Inserted ID: ' + row.insertId);
         })
         .catch(function (err) {
             response.status(500);
@@ -103,5 +117,6 @@ module.exports = {
     addCustomer,
     getLocations,
     getFoodTrucks,
+    addFoodTruck,
     getReviews
 }
