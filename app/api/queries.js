@@ -23,7 +23,7 @@ const getCustomers = function (request, response) {
         .then(function (rows) {
             console.log(rows);
             response.status(200);
-            response.json(rows);
+            response.send(rows);
         })
         .catch(function (err) {
             response.status(500);
