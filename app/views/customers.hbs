@@ -1,28 +1,37 @@
 <form action="/api/customers" method="post">
     <fieldset>
         <legend>Create a new customer account</legend>
-        <label>First name
-            <input type="text" name="firstname" autocapitalize="words" autofocus required>
-        </label>
-        <br>
-        <label>Last name
-            <input type="text" name="lastname" autocapitalize="words" required>
-        </label>
-        <br>
-        <label>Email address
-            <input type="email" name="email" required>
-        </label>
-        <br>
-        <label>User name
-            <input type="text" name="username" autocapitalize="off" required>
-        </label>
-        <br>
-        <label>Password
-            <input type="password" name="password" required>
-        </label>
-        <br>
-        <input type="submit" value="Create account">
-    </fieldset>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>First name
+                    <input type="text" class="form-control" name="firstname" autocapitalize="words" autofocus required>
+                </label>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Last name
+                    <input type="text" class="form-control" name="lastname" autocapitalize="words" required>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Email address
+                <input type="email" class="form-control" name="email" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>User name
+                    <input type="text" class="form-control" name="username" autocapitalize="off" required>
+                </label>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Password
+                    <input type="password" class="form-control" name="password" required>
+                </label>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Create account">
+        </fieldset>
+    </div>
 </form>
 <table>
     <caption>Customers</caption>
