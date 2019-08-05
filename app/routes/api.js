@@ -5,6 +5,7 @@ var api = require('../api/queries.js');
 
 /* GET all customers. */
 router.get('/customers', api.getCustomers);
+router.post('/customers', api.addCustomer);
 
 /* GET all food trucks. */
 router.get('/food-trucks', api.getFoodTrucks);

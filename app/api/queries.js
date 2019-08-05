@@ -16,6 +16,7 @@ pool.getConnection()
         console.log(`Error: ${err}`);
     });
 
+// Select all customer data
 const getCustomers = function (request, response) {
     pool
         .query("SELECT id, username, firstname, lastname, email FROM Customers;")
@@ -29,6 +30,24 @@ const getCustomers = function (request, response) {
         });
 };
 
+// Add a customer 
+const addCustomer = function (request, response) {
+    secret = credentials.secret;
+    pool
+        .query('INSERT INTO `Customers` (`username`, `firstname`, `lastname`,   `email`, `password`) VALUES (?, ?, ?, ?, AES_ENCRYPT(?, ?))', 
+        [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.body.password, credentials.secret])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send("Inserted ID: " + row.insertId);
+        })
+        .catch(function(err) {
+            response.status(500);
+        });
+
+};
+
+// Select all food truck data
 const getFoodTrucks = function (request, response) {
     pool
         .query({nestTables: '_',
@@ -45,6 +64,7 @@ const getFoodTrucks = function (request, response) {
         });
 };
 
+// Select all location data
 const getLocations = function (request, response) {
     pool
         .query('SELECT id, name, address, city, state, zip FROM Locations;')
@@ -58,6 +78,7 @@ const getLocations = function (request, response) {
         });
 };
 
+// Select all review data
 const getReviews = function (request, response) {
     pool
         .query({dateStrings: true,
@@ -79,6 +100,7 @@ const getReviews = function (request, response) {
 
 module.exports = {
     getCustomers,
+    addCustomer,
     getLocations,
     getFoodTrucks,
     getReviews
