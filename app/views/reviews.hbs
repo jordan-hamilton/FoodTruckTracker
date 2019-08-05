@@ -5,16 +5,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newReviewLabel">Write a new food truck review</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/api/reviews" method="post">
+                <form>
                     <fieldset>
                         <div class="form-group">
                             Food Truck
-                            <select class="form-control" name="food_truck_id" required>
+                            <select class="form-control" id="food_truck_id" name="food_truck_id" required>
                                 <option value=""></option>
                                     {{#each foodTruck}}
                                         <option value="{{ft_id}}">{{ft_name}}</option>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group">
                             Location Visited
-                            <select class="form-control" name="location_id">
+                            <select class="form-control" id="location_id" "name="location_id">
                                 <option value=""></option>
                                     {{#each location}}
                                         <option value="{{id}}">{{name}}</option>
@@ -33,26 +33,26 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="col-form-label">Date Visited
-                                    <input class="form-control" type="date" name="date" required>
+                                    <input class="form-control" id="date" type="date" name="date" required>
                                 </label>
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="col-form-label">Rating
-                                    <input class="form-control" type="number" name="rating" min="1" max="5" step="1">
+                                    <input class="form-control" id="rating" type="number" name="rating" min="1" max="5" step="1">
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Title
-                                <input class="form-control" type="text" name="title" required>
+                                <input class="form-control" id="title" type="text" name="title" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Description
-                                <textarea class="form-control" name="description"></textarea>
+                                <textarea class="form-control" id="description" name="description"></textarea>
                             </label>
                         </div>
-                        <input class="btn btn-primary" type="submit" value="Submit review">
+                        <input class="btn btn-primary" id="submit" type="submit" value="Submit review">
                     </fieldset>
                 </form>
             </div>
@@ -99,7 +99,7 @@ Only show reviews written by
         <td>Description</td>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="reviewList">
     {{#each review}}
         <tr>
             <td>{{cust_username}}</td>
@@ -113,3 +113,4 @@ Only show reviews written by
     {{/each}}
     </tbody>
 </table>
+<script src="./js/reviews.js"></script>
