@@ -28,9 +28,10 @@
         <div id="{{ft_id}}" class="card col-md-6">
             <img src="https://maps.googleapis.com/maps/api/staticmap?markers={{loc_address}},{{loc_city}}+{{loc_state}}&zoom=14&size=600x300&format=PNG&maptype=roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo"
                 class="card-img-top" alt="{{loc_name}}">
-            <div id="{{ft-id}}" class="card-body">
+            <div class="card-body">
                 <h4 class="card-title">{{ft_name}}</h4>
                 <p class="card-text">{{ft_description}}</p>
+                <button class="btn btn-outline-primary btn-sm" id="delete-{{ft_id}}" type="button">Delete</button>
             </div>
         </div>
         {{/each}}

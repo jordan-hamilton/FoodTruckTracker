@@ -87,7 +87,7 @@ const deleteFoodTruck = function (request, resonse) {
         .then(function (row) {
             console.log(row);
             response.status(200);
-            resonse.send('Deleted ID: ' + row.deleteId);
+            resonse.send(row);
         })
         .catch(function (err) {
             response.status(500);

@@ -1,33 +1,3 @@
-/*
-const cards = document.getElementsByClassName('card-body');
-
-for (let i = 0; i < cards.length; i++) {
-    const deleteBtn = document.createElement('button');
-    deleteBtn.setAttribute('class', 'btn btn-primary')
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', function (event) {
-        const elem = event.srcElement;
-        const id = elem.parentElement.parentElement.getAttribute('id');
-
-        // Delete a food truck entry
-        let req = new XMLHttpRequest();
-        req.open('DELETE', '/api/food-trucks/' + id, true);
-        req.addEventListener('load', function () {
-            if (req.status >= 200 && req.status < 400) {
-                console.log(`Deleted ID: ${id}`);
-                location.reload();
-            } else {
-                console.log('Request error: ' + req.statusText);
-            }
-        });
-
-        req.send(null);
-        event.preventDefault();
-    });
-    cards[i].appendChild(deleteBtn);
-};
-*/
-
 function bindSubmitButton() {
     document.getElementById('submit').addEventListener('click', function(event) {
         event.preventDefault();
@@ -51,6 +21,7 @@ function bindSubmitButton() {
                 card.setAttribute('class', 'card col-md-6');
 
                 let map = document.createElement('img');
+                // TODO: Need to call get location api to build the correct image URL
                 map.setAttribute('src', 'https://maps.googleapis.com/maps/api/staticmap?markers=235%209th%20Ave.%20N.,Seattle+WA&zoom=14&size=600x300&format=PNG&maptype=roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo');
                 map.setAttribute('class', 'card-img-top');
                 map.setAttribute('alt', 'location map');
@@ -67,14 +38,21 @@ function bindSubmitButton() {
                 cardText.setAttribute('class', 'card-text');
                 cardText.textContent = payload.description;
 
+                let deleteBtn = document.createElement('button');
+                deleteBtn.setAttribute('class', 'btn btn-outline-primary btn-sm')
+                deleteBtn.textContent = 'Delete';
+
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardText);
+                cardBody.appendChild(deleteBtn);
 
                 card.appendChild(map);
                 card.appendChild(cardBody);
 
                 foodTruckList.appendChild(card);
 
+                // TODO: fix button binding
+                bindDeleteButtons();
             } else {
                 console.error(`An error occurred: ${request.statusText}`);
             }
@@ -84,7 +62,37 @@ function bindSubmitButton() {
     });
 }
 
+function bindDeleteButtons() {
+    const cards = document.getElementsByClassName('card-body');
+
+    for (let i = 0; i < cards.length; i++) {
+        let deleteBtn = cards[i].getElementsByTagName('button');
+        deleteBtn[0].addEventListener('click', function (event) {
+            event.preventDefault();
+            
+            const element = event.srcElement;
+            const id = element.getAttribute('id').split('-')[1];
+
+            // Delete a food truck entry
+            // TODO: Fix unhandled promise rejection warning
+            let request = new XMLHttpRequest();
+            request.open('DELETE', '/api/food-trucks/' + id, true);
+            request.addEventListener('load', function() {
+                if (request.status >= 200 && request.status < 400) {
+                    const card = document.getElementById(id);
+                    card.parentNode.removeChild(card);
+                } else {
+                    console.error(`An error occurred: ${request.statusText}`);
+                }
+            });
+            
+            request.send(null);
+        });
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function(event) {
     bindSubmitButton();
+    bindDeleteButtons();
 });
 
