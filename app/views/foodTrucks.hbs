@@ -2,15 +2,15 @@
     <fieldset>
         <legend>Add a new food truck</legend>
         <label>Name
-            <input type="text" name="name" autocapitalize="words" autofocus required>
+            <input id="name" type="text" name="name" autocapitalize="words" autofocus required>
         </label>
         <br>
         <label>Description
-            <input type="text" name="description" autocapitalize="sentences">
+            <input id="description" type="text" name="description" autocapitalize="sentences">
         </label>
         <br>
         Current Location
-        <select name="location">
+        <select id="location" name="location">
             <option value=""></option>
             <option value="1">Civic Center Park</option>
             <option value="2">Coors Field</option>
@@ -19,11 +19,11 @@
             <option value="5">1stBank Center</option>
         </select>
         <br>
-        <input type="submit" value="Add this food truck">
+        <input class="btn btn-primary" id="submit" type="submit" value="Add this food truck">
     </fieldset>
 </form>
 <div class="container">
-    <div id="foodtrucks" class="row">
+    <div class="row" id="foodTruckList">
         {{#each foodTruck}}
         <div id="{{ft_id}}" class="card col-md-6">
             <img src="https://maps.googleapis.com/maps/api/staticmap?markers={{loc_address}},{{loc_city}}+{{loc_state}}&zoom=14&size=600x300&format=PNG&maptype=roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo"
@@ -36,7 +36,7 @@
         {{/each}}
     </div>
 </div>
-<script src="js/foodTruckClient.js"></script>
+<script src="./js/foodTrucks.js"></script>
 
 <!--
 <table>
