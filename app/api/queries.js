@@ -147,10 +147,11 @@ const getReviews = function (request, response) {
 };
 
 // Add a new review
-const addReview = function (request, resonse) {
+const addReview = function (request, response) {
     pool
+
         .query('INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [request.body.customer, request.body.date, request.body.title, request.body.rating, request.body.foodtruck_id, request.body.location_id, request.body.description])
+            [request.body.customer, request.body.date, request.body.title, request.body.rating, request.body.food_truck_id, request.body.location_id, request.body.description])
         .then(function (row) {
             console.log(row);
             response.status(200);

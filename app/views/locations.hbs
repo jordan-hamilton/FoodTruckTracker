@@ -1,34 +1,68 @@
-<form action="/api/locations" method="post">
-    <fieldset>
-        <legend>Add a new location</legend>
-        <label>Name
-            <input type="text" name="name" autocapitalize="words" autofocus required>
-        </label>
-        <br>
-        <label>Address
-            <input type="text" name="address" required>
-        </label>
-        <br>
-        <label>City
-            <input type="text" name="city" required>
-        </label>
-        <br>
-        <label>State
-            <input type="text" name="state" autocapitalize="characters" required>
-        </label>
-        <br>
-        <label>Zip Code
-            <input type="text" name="zip" required>
-        </label>
-        <br>
-        <input type="submit" value="Add this location">
-    </fieldset>
-</form>
-<br>
-{{#each location}}
-    <address>
-        <strong>{{name}}</strong><br>
-        {{address}}<br>
-    {{city}}, {{state}} {{zip}}<br>
-    </address>
-{{/each}}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newLocation">Add a new food truck location</button>
+<div class="modal fade" id="newLocation" tabindex="-1" role="dialog" aria-labelledby="newLocationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newLocationLabel">Add a new food truck location</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-form-label">Location Name
+                                <input class="form-control" id="name" type="text" name="name" autocapitalize="words" autofocus required>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Address
+                                <input class="form-control" id="address" type="text" name="address" required>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label">City
+                                    <input class="form-control" id="city" type="text" name="city" required>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label">State
+                                    <input class="form-control" id="state" type="text" name="state" autocapitalize="characters" required>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label">Zip Code
+                                    <input class="form-control" id="zip" type="text" name="zip" required>
+                                </label>
+                            </div>
+                        </div>
+                        <input class="btn btn-primary" id="submit" type="submit" value="Add this location">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" id="locationList">
+        {{#each location}}
+            <address class="col-sm-4">
+                <strong>{{name}}</strong>
+                <br>
+                <div class="addressLine">
+                    {{address}}
+                    <br>
+                </div>
+                <div class="areaLine">
+                    {{city}}, {{state}} {{zip}}
+                </div>
+            </address>
+        {{/each}}
+    </div>
+</div>
+<script src="./js/locations.js"></script>
