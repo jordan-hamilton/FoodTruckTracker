@@ -81,13 +81,13 @@ const addFoodTruck = function (request, response) {
 };
 
 // Delete a food truck
-const deleteFoodTruck = function (request, resonse) {
+const deleteFoodTruck = function (request, response) {
     pool
         .query('DELETE from FoodTrucks WHERE id = ?', [request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
-            resonse.send(row);
+            response.send(row);
         })
         .catch(function (err) {
             response.status(500);
