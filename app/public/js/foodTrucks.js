@@ -12,6 +12,7 @@ function bindSubmitButton() {
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
+                $('#newFoodTruck').modal('hide');
                 clearForm();
                 createFoodTruckList();
             } else {
