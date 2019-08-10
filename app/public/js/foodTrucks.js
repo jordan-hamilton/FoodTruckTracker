@@ -8,7 +8,7 @@ function bindSubmitButton() {
         payload.description = document.getElementById('description').value;
         payload.location = document.getElementById('location').value;
 
-        request.open('POST', '/api/food-trucks', true);
+        request.open('POST', '/api/food-trucks/', true);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
@@ -54,6 +54,31 @@ function clearForm() {
     document.getElementById('description').value = '';
     document.getElementById('location').selectedIndex = 0;
 }
+
+function createLocationList() {
+    let req = new XMLHttpRequest();
+    req.open('GET', '/api/locations/', true);
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            console.log(req.responseText);
+            const res = JSON.parse(req.responseText);
+
+            let locationList = document.getElementById('location');
+
+            res.forEach(function (loc) {
+                let location = document.createElement('option');
+                location.setAttribute('value', loc.id);
+                location.textContent = loc.name;
+                locationList.appendChild(location);
+            });
+        } else {
+            console.error(`An error occurred: ${req.statusText}`);
+        }
+    });
+
+    req.send(null);
+}
+
 
 function createFoodTruckList() {
     let request = new XMLHttpRequest();
@@ -111,6 +136,7 @@ function createFoodTruckList() {
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
+    createLocationList();
     createFoodTruckList();
     bindSubmitButton();
 });
