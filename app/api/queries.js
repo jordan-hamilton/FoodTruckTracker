@@ -19,7 +19,7 @@ pool.getConnection()
 // Select all customer data
 const getCustomers = function (request, response) {
     pool
-        .query("SELECT id, username, firstname, lastname, email FROM Customers;")
+        .query("SELECT id, username, firstname, lastname, email FROM Customers ORDER BY lastname, firstname ASC;")
         .then(function (rows) {
             console.log(rows);
             response.status(200);
@@ -53,7 +53,8 @@ const getFoodTrucks = function (request, response) {
             nestTables: '_',
             sql: 'SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip\n' +
                 'FROM FoodTrucks AS ft\n' +
-                'INNER JOIN Locations AS loc ON loc.id = ft.location;'
+                'INNER JOIN Locations AS loc ON loc.id = ft.location\n' +
+                'ORDER BY ft.name ASC;'
         })
         .then(function (rows) {
             console.log(rows);
@@ -98,7 +99,7 @@ const deleteFoodTruck = function (request, response) {
 // Select all location data
 const getLocations = function (request, response) {
     pool
-        .query('SELECT id, name, address, city, state, zip FROM Locations;')
+        .query('SELECT id, name, address, city, state, zip FROM Locations ORDER BY name ASC;')
         .then(function (rows) {
             console.log(rows);
             response.status(200);
@@ -134,7 +135,8 @@ const getReviews = function (request, response) {
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
                 'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck;'
+                'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                'ORDER BY rev.date DESC;'
         })
         .then(function (rows) {
             console.log(rows);
