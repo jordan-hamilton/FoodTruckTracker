@@ -15,6 +15,9 @@ router.get('/food-trucks', api.getFoodTrucks);
 /* POST a new food truck */
 router.post('/food-trucks', api.addFoodTruck);
 
+/* DELETE a food truck */
+router.delete('/food-trucks/:id', api.deleteFoodTruck);
+
 /* GET all locations. */
 router.get('/locations', api.getLocations);
 

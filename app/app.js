@@ -36,12 +36,12 @@ app.use('/reviews', reviewsRouter);
 app.use('/customers-food-trucks', customersFoodTrucksRouter);
 
 // Catch 404 errors
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
