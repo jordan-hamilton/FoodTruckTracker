@@ -61,7 +61,6 @@ function createLocationList() {
     request.open('GET', '/api/locations/', true);
     request.addEventListener('load', function () {
         if (request.status >= 200 && request.status < 400) {
-            console.log(request.responseText);
             const response = JSON.parse(request.responseText);
 
             let locationList = document.getElementById('location');

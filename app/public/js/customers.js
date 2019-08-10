@@ -1,5 +1,5 @@
 function bindSubmitButton() {
-    document.getElementById('submit').addEventListener('click', function(event) {
+    document.getElementById('submit').addEventListener('click', function (event) {
         event.preventDefault();
 
         var request = new XMLHttpRequest();
@@ -13,25 +13,11 @@ function bindSubmitButton() {
         request.open('POST', '/api/customers', true);
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function() {
+        request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
-                console.log(request.responseText);
-                var customerRow = document.createElement('tr');
-
-                var usernameCell = document.createElement('td');
-                usernameCell.textContent = payload.username;
-                customerRow.appendChild(usernameCell);
-
-                var firstnameCell = document.createElement('td');
-                firstnameCell.textContent = payload.firstname;
-                customerRow.appendChild(firstnameCell);
-
-                var lastnameCell = document.createElement('td');
-                lastnameCell.textContent = payload.lastname;
-                customerRow.appendChild(lastnameCell);
-
-                document.getElementById('customerList').insertAdjacentElement('beforeend', customerRow);
                 $('#newCustomer').modal('hide');
+                clearForm();
+                createCustomerList();
             } else {
                 console.error(`An error occurred: ${request.statusText}`)
                 //document.getElementById('result').textContent = 'An error occurred when attempting to add this customer. Please ensure all values in the form above have been filled, then try again.'
@@ -42,6 +28,54 @@ function bindSubmitButton() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
+function clearForm() {
+    document.getElementById('firstname').value = '';
+    document.getElementById('lastname').value = '';
+    document.getElementById('firstname').value = '';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+}
+
+function createCustomerList() {
+    let request = new XMLHttpRequest();
+    request.open('GET', '/api/customers/', true);
+    request.addEventListener('load', function () {
+        if (request.status >= 200 && request.status < 400) {
+            const response = JSON.parse(request.responseText);
+
+            let customerList = document.getElementById('customerList');
+            customerList.innerHTML = '';
+
+            response.forEach(function (cust) {
+                let customer = document.createElement('tr');
+
+                let lastname = document.createElement('td');
+                lastname.textContent = cust.lastname;
+
+                let firstname = document.createElement('td');
+                firstname.textContent = cust.firstname;
+
+                let username = document.createElement('td');
+                username.textContent = cust.username;
+
+                let email = document.createElement('td');
+                email.textContent = cust.email;
+
+                customer.appendChild(lastname);
+                customer.appendChild(firstname);
+                customer.appendChild(username);
+                customer.appendChild(email);
+                customerList.appendChild(customer);
+            });
+        } else {
+            console.error(`An error occurred: ${request.statusText}`);
+        }
+    });
+
+    request.send(null);
+}
+
+document.addEventListener('DOMContentLoaded', function (event) {
+    createCustomerList();
     bindSubmitButton();
 });
