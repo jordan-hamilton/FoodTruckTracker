@@ -1,5 +1,7 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newLocation">Add a new food truck location</button>
-<div class="modal fade" id="newLocation" tabindex="-1" role="dialog" aria-labelledby="newLocationLabel" aria-hidden="true">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newLocation">Add a new food truck
+    location</button>
+<div class="modal fade" id="newLocation" tabindex="-1" role="dialog" aria-labelledby="newLocationLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +15,8 @@
                     <fieldset>
                         <div class="form-group">
                             <label class="col-form-label">Location Name
-                                <input class="form-control" id="name" type="text" name="name" autocapitalize="words" autofocus required>
+                                <input class="form-control" id="name" type="text" name="name" autocapitalize="words"
+                                    autofocus required>
                             </label>
                         </div>
                         <div class="form-group">
@@ -29,7 +32,8 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="col-form-label">State
-                                    <input class="form-control" id="state" type="text" name="state" autocapitalize="characters" required>
+                                    <input class="form-control" id="state" type="text" name="state"
+                                        autocapitalize="characters" required>
                                 </label>
                             </div>
                             <div class="form-group col-md-3">
@@ -49,20 +53,6 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" id="locationList">
-        {{#each location}}
-            <address class="col-sm-4">
-                <strong>{{name}}</strong>
-                <br>
-                <div class="addressLine">
-                    {{address}}
-                    <br>
-                </div>
-                <div class="areaLine">
-                    {{city}}, {{state}} {{zip}}
-                </div>
-            </address>
-        {{/each}}
-    </div>
+    <div class="row" id="locationList"></div>
 </div>
 <script src="./js/locations.js"></script>
