@@ -57,27 +57,27 @@ function clearForm() {
 }
 
 function createLocationList() {
-    let req = new XMLHttpRequest();
-    req.open('GET', '/api/locations/', true);
-    req.addEventListener('load', function () {
-        if (req.status >= 200 && req.status < 400) {
-            console.log(req.responseText);
-            const res = JSON.parse(req.responseText);
+    let request = new XMLHttpRequest();
+    request.open('GET', '/api/locations/', true);
+    request.addEventListener('load', function () {
+        if (request.status >= 200 && request.status < 400) {
+            console.log(request.responseText);
+            const response = JSON.parse(request.responseText);
 
             let locationList = document.getElementById('location');
 
-            res.forEach(function (loc) {
+            response.forEach(function (loc) {
                 let location = document.createElement('option');
                 location.setAttribute('value', loc.id);
                 location.textContent = loc.name;
                 locationList.appendChild(location);
             });
         } else {
-            console.error(`An error occurred: ${req.statusText}`);
+            console.error(`An error occurred: ${request.statusText}`);
         }
     });
 
-    req.send(null);
+    request.send(null);
 }
 
 
