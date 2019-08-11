@@ -96,6 +96,7 @@ function createReviewList() {
                 reviewCardInfoPane.appendChild(customerImage);
 
                 let customerName = document.createElement('span');
+                customerName.setAttribute('class', 'ml-1')
                 customerName.textContent = rev.cust_username;
                 reviewCardInfoPane.appendChild(customerName);
 
