@@ -1,27 +1,48 @@
-<form action="/api/food-trucks" method="post">
-    <fieldset>
-        <legend>Add a new food truck</legend>
-        <label>Name
-            <input id="name" type="text" name="name" autocapitalize="words" autofocus required>
-        </label>
-        <br>
-        <label>Description
-            <input id="description" type="text" name="description" autocapitalize="sentences">
-        </label>
-        <br>
-        Current Location
-        <select id="location" name="location">
-            <option value=""></option>
-            <option value="1">Civic Center Park</option>
-            <option value="2">Coors Field</option>
-            <option value="3">Thomas and 9th</option>
-            <option value="4">Denny Park</option>
-            <option value="5">1stBank Center</option>
-        </select>
-        <br>
-        <input class="btn btn-primary" id="submit" type="submit" value="Add this food truck">
-    </fieldset>
-</form>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFoodTruck">Add a new food
+    truck</button>
+
+<div class="modal fade" id="newFoodTruck" tabindex="-1" role="dialog" aria-labelledby="newFoodTruckLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="model-title" id="newFoodTruckLabel">Add a new food truck</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-form-label">Name
+                                <input class="form-control" id="name" type="text" name="name" autocapitalize="words"
+                                    autofocus required>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Location
+                                <select class="form-control" id="location" name="location">
+                                    <option value="0"></option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Description
+                                <textarea class="form-control" id="description" name="description" rows="5" cols="50"
+                                    autocapitalize="sentences"></textarea>
+                            </label>
+                        </div>
+                        <input class="btn btn-primary" id="submit" type="submit" value="Add this food truck">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row" id="foodTruckList"></div>

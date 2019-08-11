@@ -1,6 +1,8 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCustomer">Create a new customer account</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCustomer">Create a new customer
+    account</button>
 
-<div class="modal fade" id="newCustomer" tabindex="-1" role="dialog" aria-labelledby="newCustomerLabel" aria-hidden="true">
+<div class="modal fade" id="newCustomer" tabindex="-1" role="dialog" aria-labelledby="newCustomerLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,12 +17,14 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="col-form-label">First name
-                                    <input type="text" class="form-control" id="firstname" name="firstname" autocapitalize="words" autofocus required>
+                                    <input type="text" class="form-control" id="firstname" name="firstname"
+                                        autocapitalize="words" autofocus required>
                                 </label>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="col-form-label">Last name
-                                    <input type="text" class="form-control" id="lastname" name="lastname" autocapitalize="words" required>
+                                    <input type="text" class="form-control" id="lastname" name="lastname"
+                                        autocapitalize="words" required>
                                 </label>
                             </div>
                         </div>
@@ -32,7 +36,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="col-form-label">User name
-                                    <input type="text" class="form-control" id="username" name="username" autocapitalize="off" required>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        autocapitalize="off" required>
                                 </label>
                             </div>
                             <div class="form-group col-md-6">
@@ -51,25 +56,17 @@
         </div>
     </div>
 </div>
-<br>
-<table>
+
+<table class="table">
     <caption>Customers</caption>
     <thead>
-    <tr>
-        <td>Username</td>
-        <td>First Name</td>
-        <td>Last Name</td>
-    </tr>
+        <tr>
+            <th scope="col">Last Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+        </tr>
     </thead>
-    <tbody id="customerList">
-        {{#each customer}}
-            <tr>
-                <td>{{username}}</td>
-                <td>{{firstname}}</td>
-                <td>{{lastname}}</td>
-            </tr>
-        {{/each}}
-    <tr>
-    </tbody>
+    <tbody id="customerList"></tbody>
 </table>
 <script src="./js/customers.js"></script>
