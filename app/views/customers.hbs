@@ -1,6 +1,3 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCustomer">Create a new customer
-    account</button>
-
 <div class="modal fade" id="newCustomer" tabindex="-1" role="dialog" aria-labelledby="newCustomerLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -46,27 +43,34 @@
                                 </label>
                             </div>
                         </div>
-                        <input class="btn btn-primary" id="submit" type="submit" value="Create account">
                     </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="submit">Create account</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-<table class="table">
-    <caption>Customers</caption>
-    <thead>
-        <tr>
-            <th scope="col">Last Name</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-        </tr>
-    </thead>
-    <tbody id="customerList"></tbody>
-</table>
+<div class="container">
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newCustomer">Create a new
+        customer
+        account</button>
+
+    <table class="table">
+        <caption>Customers</caption>
+        <thead>
+            <tr>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody id="customerList"></tbody>
+    </table>
+
+</div>
 <script src="./js/customers.js"></script>
