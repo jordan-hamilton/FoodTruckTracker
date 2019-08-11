@@ -79,7 +79,7 @@ Only show reviews with a rating of at least
     <option value="3">3</option>
     <option value="2">2</option>
     <option value="1">1</option>
-</select>
+</select> stars
 <br>
 Only show reviews written by
 <input type="search" placeholder="Username" spellcheck="false" id="username">
@@ -87,30 +87,9 @@ Only show reviews written by
 <button>Filter</button>
 <br>
 <a id="reset" href="#reset">Reset filters</a>
-<table>
-    <caption>Reviews</caption>
-    <thead>
-    <tr>
-        <td>Username</td>
-        <td>Date</td>
-        <td>Rating</td>
-        <td>Food Truck</td>
-        <td>Title</td>
-        <td>Description</td>
-    </tr>
-    </thead>
-    <tbody id="reviewList">
-    {{#each review}}
-        <tr>
-            <td>{{cust_username}}</td>
-            <td>{{rev_date}}</td>
-            <td>{{rev_rating}}</td>
-            <td>{{ft_vendor}}</td>
-            <td>{{rev_title}}</td>
-            <td>{{rev_description}}</td>
-            <td><input type="submit" value="Update" id="{{rev_id}}"></td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+<div class="container">
+    <div class="accordion" id="reviewList"></div>
+</div>
+
+
 <script src="./js/reviews.js"></script>

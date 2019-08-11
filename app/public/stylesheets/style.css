@@ -18,6 +18,14 @@ body {
   font-weight: bold;
 }
 
+.customer-icon {
+  height: 20px;
+}
+
+.rating-icon {
+  height: 20px;
+}
+
 a {
   color: #00B7FF;
 }
