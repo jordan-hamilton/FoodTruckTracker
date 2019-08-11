@@ -102,6 +102,7 @@ function createFoodTruckList() {
                             roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo`;
                 map.setAttribute('src', mapUrl);
                 map.setAttribute('alt', ft.loc_name);
+                map.setAttribute('class', 'img-fluid');
 
                 let cardBody = document.createElement('div');
                 cardBody.setAttribute('class', 'card-body');
