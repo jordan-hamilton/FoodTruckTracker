@@ -61,9 +61,9 @@ function createLocationList() {
                 addressLine.textContent = loc.address;
                 location.appendChild(addressLine);
 
-                let areaLine = document.createElement('di');
+                let areaLine = document.createElement('div');
                 areaLine.setAttribute('class', 'areaLine');
-                areaLine.textContent = loc.city + ',' + loc.state + ' ' + loc.zip;
+                areaLine.textContent = loc.city + ', ' + loc.state + ' ' + loc.zip;
                 location.appendChild(areaLine);
 
                 locationList.appendChild(location);
