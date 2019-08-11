@@ -53,7 +53,7 @@ const getFoodTrucks = function (request, response) {
             nestTables: '_',
             sql: 'SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip\n' +
                 'FROM FoodTrucks AS ft\n' +
-                'INNER JOIN Locations AS loc ON loc.id = ft.location\n' +
+                'LEFT JOIN Locations AS loc ON loc.id = ft.location\n' +
                 'ORDER BY ft.name ASC;'
         })
         .then(function (rows) {

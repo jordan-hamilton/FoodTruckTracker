@@ -22,6 +22,12 @@ body {
   height: 20px;
 }
 
+.loc-not-found {
+  font-size: large;
+  font-style: italic;
+  text-align: center;
+}
+
 .rating-icon {
   height: 20px;
 }

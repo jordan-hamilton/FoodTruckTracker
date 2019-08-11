@@ -96,34 +96,41 @@ function createFoodTruckList() {
                 card.setAttribute('id', ft.ft_id);
                 card.setAttribute('class', 'card col-md-6');
 
-                let map = document.createElement('img');
-                let mapUrl = `https://maps.googleapis.com/maps/api/staticmap?markers=\
-                            ${ft.loc_address},${ft.loc_city}+${ft.loc_state}&zoom=14&size=600x300&format=PNG&maptype=\
-                            roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo`;
-                map.setAttribute('src', mapUrl);
-                map.setAttribute('alt', ft.loc_name);
-                map.setAttribute('class', 'img-fluid');
+                if (ft.loc_name != null) {
+                    let map = document.createElement('img');
+                    map.setAttribute('class', 'img-fluid');
+                    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?markers=\
+                    ${ft.loc_address},${ft.loc_city}+${ft.loc_state}&zoom=14&size=600x300&format=PNG&maptype=\
+                    roadmap&key=AIzaSyBueaHQo4UUWzFY9958zOy_qn5sWo3ODeo`;
+                    map.setAttribute('src', mapUrl);
+                    map.setAttribute('alt', ft.loc_name);
+                    card.appendChild(map);
+                } else {
+                    const noMap = document.createElement('div');
+                    noMap.setAttribute('class', 'loc-not-found py-4 text-secondary');
+                    noMap.textContent = 'No location information available';
+                    card.appendChild(noMap);
+                }
 
                 let cardBody = document.createElement('div');
                 cardBody.setAttribute('class', 'card-body');
+                card.appendChild(cardBody);
 
                 let cardTitle = document.createElement('h4');
                 cardTitle.setAttribute('class', 'card-title');
                 cardTitle.textContent = ft.ft_name;
+                cardBody.appendChild(cardTitle);
 
                 let cardText = document.createElement('p');
                 cardText.setAttribute('class', 'card-text');
                 cardText.textContent = ft.ft_description;
+                cardBody.appendChild(cardText);
 
                 let deleteBtn = document.createElement('button');
                 deleteBtn.setAttribute('class', 'btn btn-outline-primary btn-sm')
                 deleteBtn.textContent = 'Delete';
-
-                cardBody.appendChild(cardTitle);
-                cardBody.appendChild(cardText);
                 cardBody.appendChild(deleteBtn);
-                card.appendChild(map);
-                card.appendChild(cardBody);
+
                 foodTruckList.appendChild(card);
 
                 bindDeleteButtons();
