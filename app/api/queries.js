@@ -81,6 +81,21 @@ const addFoodTruck = function (request, response) {
         });
 };
 
+// Update a food truck
+const updateFoodTruck = function (request, response) {
+    pool
+        .query('UPDATE FoodTrucks SET name = ?, description = ? WHERE id = ?;',
+            [request.body.name, request.body.description, request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Delete a food truck
 const deleteFoodTruck = function (request, response) {
     pool
@@ -167,6 +182,7 @@ module.exports = {
     addCustomer,
     getFoodTrucks,
     addFoodTruck,
+    updateFoodTruck,
     deleteFoodTruck,
     getLocations,
     addLocation,
