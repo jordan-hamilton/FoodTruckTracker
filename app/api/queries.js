@@ -19,7 +19,7 @@ pool.getConnection()
 // Select all customer data
 const getCustomers = function (request, response) {
     pool
-        .query("SELECT id, username, firstname, lastname, email FROM Customers ORDER BY lastname, firstname ASC;")
+        .query("SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;")
         .then(function (rows) {
             console.log(rows);
             response.status(200);
@@ -34,7 +34,7 @@ const getCustomers = function (request, response) {
 const addCustomer = function (request, response) {
     secret = credentials.secret;
     pool
-        .query('INSERT INTO Customers (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, AES_ENCRYPT(?, ?))',
+        .query('INSERT INTO Customers (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, AES_ENCRYPT(?, ?));',
             [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.body.password, credentials.secret])
         .then(function (row) {
             console.log(row);
@@ -69,7 +69,7 @@ const getFoodTrucks = function (request, response) {
 // Add a food truck
 const addFoodTruck = function (request, response) {
     pool
-        .query('INSERT INTO FoodTrucks (name, description, location) VALUES (?, ?, ?)',
+        .query('INSERT INTO FoodTrucks (name, description, location) VALUES (?, ?, ?);',
             [request.body.name, request.body.description, request.body.location])
         .then(function (row) {
             console.log(row);
@@ -84,7 +84,7 @@ const addFoodTruck = function (request, response) {
 // Delete a food truck
 const deleteFoodTruck = function (request, response) {
     pool
-        .query('DELETE from FoodTrucks WHERE id = ?', [request.params.id])
+        .query('DELETE from FoodTrucks WHERE id = ?;', [request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -93,7 +93,6 @@ const deleteFoodTruck = function (request, response) {
         .catch(function (err) {
             response.status(500);
         });
-    ;
 }
 
 // Select all location data
@@ -113,7 +112,7 @@ const getLocations = function (request, response) {
 // Add a new location
 const addLocation = function (request, response) {
     pool
-        .query('INSERT INTO Locations (name, address, city, state, zip) VALUES (?, ?, ?, ?, ?)',
+        .query('INSERT INTO Locations (name, address, city, state, zip) VALUES (?, ?, ?, ?, ?);',
             [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip])
         .then(function (row) {
             console.log(row);
@@ -151,7 +150,7 @@ const getReviews = function (request, response) {
 // Add a new review
 const addReview = function (request, response) {
     pool
-        .query('INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        .query('INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) VALUES (?, ?, ?, ?, ?, ?, ?);',
             [request.body.customer, request.body.date, request.body.title, request.body.rating, request.body.food_truck_id, request.body.location_id, request.body.description])
         .then(function (row) {
             console.log(row);
