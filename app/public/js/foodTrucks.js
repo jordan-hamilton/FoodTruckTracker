@@ -6,9 +6,12 @@ function bindAddButton() {
         $('#newFoodTruck').on('show.bs.modal', function (event) {
             var modal = $(this);
             var title = 'Add a new food truck';
+            var location = modal.find('#location');
             modal.find('.modal-title').text(title);
             modal.find('#name').val('');
-            modal.find('#location').prop('disabled', false);
+            location.val('');
+            location.removeClass('no-arrow');
+            location.prop('disabled', false);
             modal.find('#description').val('');
             modal.find('#foodTruckId').val('');
             modal.find('#update').prop('checked', false);
@@ -27,15 +30,20 @@ function bindUpdateButtons() {
             const id = element.parentElement.parentElement.getAttribute('id');
             const card = document.getElementById(id);
             const name = card.getElementsByClassName('card-title')[0].textContent;
+            const locId = card.firstChild.getAttribute('data-location')
+
             const description = card.getElementsByClassName('card-text')[0].textContent;
 
             // Set modal properties
             $('#newFoodTruck').on('show.bs.modal', function (event) {
                 var modal = $(this);
                 var title = 'Edit food truck information';
+                var location = modal.find('#location');
                 modal.find('.modal-title').text(title);
                 modal.find('#name').val(name);
-                modal.find('#location').prop('disabled', true);
+                location.val(locId);
+                location.addClass('no-arrow');
+                location.prop('disabled', true);
                 modal.find('#description').val(description);
                 modal.find('#foodTruckId').val(id);
                 modal.find('#update').prop('checked', true);
@@ -153,6 +161,7 @@ function createFoodTruckList() {
 
                 if (ft.loc_name != null) {
                     let map = document.createElement('img');
+                    map.setAttribute('data-location', ft.rev_location);
                     map.setAttribute('class', 'img-fluid');
                     const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?markers=\
                     ${ft.loc_address},${ft.loc_city}+${ft.loc_state}&zoom=14&size=600x300&format=PNG&maptype=\
@@ -162,6 +171,7 @@ function createFoodTruckList() {
                     card.appendChild(map);
                 } else {
                     const noMap = document.createElement('div');
+                    noMap.setAttribute('data-location', '0');
                     noMap.setAttribute('class', 'loc-not-found py-4 text-secondary');
                     noMap.textContent = 'No location information available';
                     card.appendChild(noMap);

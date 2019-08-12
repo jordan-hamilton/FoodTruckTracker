@@ -41,6 +41,14 @@ caption {
   caption-side: top;
 }
 
+select.no-arrow {
+  padding: 5px;
+  -o-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 thead {
   font-weight: bold;
 }
