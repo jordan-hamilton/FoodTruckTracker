@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="model-title" id="newFoodTruckLabel">Add a new food truck</h5>
+                <h5 class="modal-title" id="newFoodTruckLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -15,6 +15,7 @@
                             <label class="col-form-label">Name
                                 <input class="form-control" id="name" type="text" name="name" autocapitalize="words"
                                     autofocus required>
+                                <p id="missingName" hidden>Please enter a name for the food truck.</P>
                             </label>
                         </div>
                         <div class="form-group">
@@ -30,11 +31,13 @@
                                     autocapitalize="sentences"></textarea>
                             </label>
                         </div>
+                        <input type="number" id="foodTruckId" hidden>
+                        <input type="checkbox" id="update" hidden>
                     </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="submit">Add food truck</button>
+                <button type="submit" class="btn btn-primary" id="submit">OK</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -42,7 +45,8 @@
 </div>
 
 <div class="container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFoodTruck">Add a new food
+    <button type="button" class="btn btn-primary mb-3" id="addFoodTruck" data-toggle="modal"
+        data-target="#newFoodTruck">Add a new food
         truck</button>
 
     <div class="row" id="foodTruckList"></div>

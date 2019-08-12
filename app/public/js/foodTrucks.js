@@ -1,3 +1,50 @@
+function bindAddButton() {
+    document.getElementById('addFoodTruck').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        // Set modal properties
+        $('#newFoodTruck').on('show.bs.modal', function (event) {
+            var modal = $(this);
+            var title = 'Add a new food truck';
+            modal.find('.modal-title').text(title);
+            modal.find('#name').val('');
+            modal.find('#location').prop('disabled', false);
+            modal.find('#description').val('');
+            modal.find('#foodTruckId').val('');
+            modal.find('#update').prop('checked', false);
+        });
+    });
+}
+
+function bindUpdateButtons() {
+    const cards = document.getElementsByClassName('card-body');
+
+    for (let i = 0; i < cards.length; i++) {
+        let updateBtn = cards[i].getElementsByClassName('update');
+        updateBtn[0].addEventListener('click', function (event) {
+            event.preventDefault();
+            const element = event.srcElement;
+            const id = element.parentElement.parentElement.getAttribute('id');
+            const card = document.getElementById(id);
+            const name = card.getElementsByClassName('card-title')[0].textContent;
+            const description = card.getElementsByClassName('card-text')[0].textContent;
+
+            // Set modal properties
+            $('#newFoodTruck').on('show.bs.modal', function (event) {
+                var modal = $(this);
+                var title = 'Edit food truck information';
+                modal.find('.modal-title').text(title);
+                modal.find('#name').val(name);
+                modal.find('#location').prop('disabled', true);
+                modal.find('#description').val(description);
+                modal.find('#foodTruckId').val(id);
+                modal.find('#update').prop('checked', true);
+            });
+        });
+    }
+}
+
+
 function bindSubmitButton() {
     document.getElementById('submit').addEventListener('click', function (event) {
         event.preventDefault();
@@ -8,7 +55,15 @@ function bindSubmitButton() {
         payload.description = document.getElementById('description').value;
         payload.location = document.getElementById('location').value;
 
-        request.open('POST', '/api/food-trucks/', true);
+        const id = document.getElementById('foodTruckId').value;
+        const update = document.getElementById('update').checked;
+
+        if (update) {
+            request.open('PUT', '/api/food-trucks/' + id, true);
+        } else {
+            request.open('POST', '/api/food-trucks/', true);
+        }
+
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
@@ -28,7 +83,7 @@ function bindDeleteButtons() {
     const cards = document.getElementsByClassName('card-body');
 
     for (let i = 0; i < cards.length; i++) {
-        let deleteBtn = cards[i].getElementsByTagName('button');
+        let deleteBtn = cards[i].getElementsByClassName('delete');
         deleteBtn[0].addEventListener('click', function (event) {
             event.preventDefault();
 
@@ -47,7 +102,7 @@ function bindDeleteButtons() {
 
             request.send(null);
         });
-    };
+    }
 }
 
 function clearForm() {
@@ -126,18 +181,26 @@ function createFoodTruckList() {
                 cardText.textContent = ft.ft_description;
                 cardBody.appendChild(cardText);
 
+                let updateBtn = document.createElement('button');
+                updateBtn.setAttribute('class', 'update btn btn-outline-primary btn-sm float-right ml-2');
+                updateBtn.setAttribute('data-toggle', 'modal');
+                updateBtn.setAttribute('data-target', '#newFoodTruck');
+                updateBtn.textContent = 'Update';
+                cardBody.appendChild(updateBtn);
+
                 let deleteBtn = document.createElement('button');
-                deleteBtn.setAttribute('class', 'btn btn-outline-primary btn-sm')
+                deleteBtn.setAttribute('class', 'delete btn btn-outline-primary btn-sm float-right');
                 deleteBtn.textContent = 'Delete';
                 cardBody.appendChild(deleteBtn);
 
                 foodTruckList.appendChild(card);
-
-                bindDeleteButtons();
             });
         } else {
             console.error(`An error occurred: ${request.statusText}`);
         }
+
+        bindUpdateButtons();
+        bindDeleteButtons();
     });
 
     request.send(null);
@@ -146,6 +209,7 @@ function createFoodTruckList() {
 document.addEventListener('DOMContentLoaded', function (event) {
     createLocationList();
     createFoodTruckList();
+    bindAddButton();
     bindSubmitButton();
 });
 
