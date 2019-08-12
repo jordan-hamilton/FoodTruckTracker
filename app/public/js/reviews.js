@@ -2,6 +2,15 @@ function bindSubmitButton() {
     document.getElementById('submit').addEventListener('click', function(event) {
         event.preventDefault();
 
+        let form = document.getElementById('modalForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
         // Get the text of the selected options, not their IDs, so we can append them directly to the table of reviews.
         var foodTruckSelector = document.getElementById('food_truck_id');
         var foodTruckText = foodTruckSelector.options[foodTruckSelector.selectedIndex].text;
@@ -96,7 +105,7 @@ function createReviewList() {
                 reviewCardInfoPane.appendChild(customerImage);
 
                 let customerName = document.createElement('span');
-                customerName.setAttribute('class', 'ml-1')
+                customerName.setAttribute('class', 'ml-1');
                 customerName.textContent = rev.cust_username;
                 reviewCardInfoPane.appendChild(customerName);
 
@@ -111,12 +120,12 @@ function createReviewList() {
                 reviewCardInfoPane.appendChild(rating);
 
                 let foodTruck = document.createElement('h5');
-                foodTruck.setAttribute('class', 'ml-3')
+                foodTruck.setAttribute('class', 'ml-3');
                 foodTruck.textContent = rev.ft_vendor;
                 reviewCardInfoPane.appendChild(foodTruck);
 
                 let location = document.createElement('h6');
-                location.setAttribute('class', 'ml-3')
+                location.setAttribute('class', 'ml-3');
                 location.textContent = rev.loc_location;
                 reviewCardInfoPane.appendChild(location);
 

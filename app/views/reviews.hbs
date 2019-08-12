@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form class="needs-validation" id="modalForm" novalidate>
                     <fieldset>
                         <div class="form-group">
                             Food Truck
@@ -56,7 +56,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input class="btn btn-primary" id="submit" type="submit" value="Submit review">
+                <input class="btn btn-primary" id="submit" form="modalForm" type="submit" value="Submit review">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -90,6 +90,4 @@ Only show reviews written by
 <div class="container">
     <div class="accordion" id="reviewList"></div>
 </div>
-
-
 <script src="./js/reviews.js"></script>
