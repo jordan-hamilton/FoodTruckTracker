@@ -149,7 +149,7 @@ PROS - Convenient ordering at the counter.  Clean, industrial open kitchen layou
 CONS - Meat to bun ratio was skewed toward the bread.  I had the Coney - beef dog w/ sweet meat sauce...it sounded good and looked good, but there was so much gap between the top of the meat filling and the edge of the bread.  My bf had the same problem and his was loaded with fried onions.
 
 I fully support a well-dressed dog, but too much bread ruined the flavor.  I understand the cart offers different options, probably price too.  Hope the restaurant will work out its kinks!"),
-(5, 5, '2019-06-14', 'T.R.O.U.B.L.E.', 4, 4, 2, "Yep I can spell it and get into it... a lot at Biker Jim's. 
+(5, 5, '2019-06-14', 'T.R.O.U.B.L.E.', 4, 4, 5, "Yep I can spell it and get into it... a lot at Biker Jim's. 
 
 The menu is incredible, creative, and mesmerizing as it took me a good 10 minutes himming and hawing over which delicious dog would be all mine. 
 

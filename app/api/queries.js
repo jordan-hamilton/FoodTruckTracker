@@ -51,9 +51,23 @@ const getFoodTrucks = function (request, response) {
     pool
         .query({
             nestTables: '_',
-            sql: 'SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip\n' +
-                'FROM FoodTrucks AS ft\n' +
-                'LEFT JOIN Locations AS loc ON loc.id = ft.location\n' +
+            sql: 'SELECT ft.id, ft.name, ft.description, rev.location, loc.name, loc.address, loc.city, loc.state, loc.zip\n' +
+                'FROM FoodTrucks ft\n' +
+                'LEFT JOIN (\n' +
+                'SELECT r.foodtruck AS foodtruck, r.location AS location\n' +
+                'FROM Reviews r\n' +
+                'INNER JOIN (\n' +
+                'SELECT r2.foodtruck, r2.location, MAX(date) AS last_rev\n' +
+                'FROM Reviews r2\n' +
+                'GROUP BY foodtruck\n' +
+                ') R\n' +
+                'ON R.foodtruck = r.foodtruck\n' +
+                'AND R.last_rev = r.date\n' +
+                'GROUP BY r.foodtruck, r.location\n' +
+                ') AS rev\n' +
+                'ON rev.foodtruck = ft.id\n' +
+                'LEFT JOIN Locations loc\n' +
+                'ON loc.id = rev.location\n' +
                 'ORDER BY ft.name ASC;'
         })
         .then(function (rows) {
