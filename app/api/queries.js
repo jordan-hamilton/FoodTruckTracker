@@ -1,11 +1,9 @@
 const mariadb = require('mariadb');
 
-// Import our database connection credentials if they're not stored in an environment variable
-if (!process.env.DATABASE_URL) {
-    var credentials = require('../credentials.js');
-}
+// Import our database connection credentials
+var credentials = require('../credentials.js');
 
-const pool = mariadb.createPool(process.env.DATABASE_URL || credentials.DATABASE_URL);
+const pool = mariadb.createPool(credentials.DATABASE_URL);
 
 pool.getConnection()
     .then(function (conn) {
@@ -38,6 +36,7 @@ const addCustomer = function (request, response) {
             [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.body.password, credentials.secret])
         .then(function (row) {
             console.log(row);
+            request.session.customer_id = row.insertId;
             response.status(200);
             response.send('Inserted ID: ' + row.insertId);
         })
@@ -122,7 +121,7 @@ const deleteFoodTruck = function (request, response) {
         .catch(function (err) {
             response.status(500);
         });
-}
+};
 
 // Select all location data
 const getLocations = function (request, response) {
@@ -189,7 +188,7 @@ const addReview = function (request, response) {
         .catch(function (err) {
             response.status(500);
         });
-}
+};
 
 module.exports = {
     getCustomers,
@@ -202,4 +201,4 @@ module.exports = {
     addLocation,
     getReviews,
     addReview
-}
+};
