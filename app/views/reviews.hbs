@@ -1,5 +1,4 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newReview">Write a new food truck review</button>
-
+<button type="button" class="btn btn-primary" id= "newReviewButton" data-toggle="modal" data-target="#newReview">Write a new food truck review</button>
 <div class="modal fade" id="newReview" tabindex="-1" role="dialog" aria-labelledby="newReviewLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -52,6 +51,7 @@
                                 <textarea class="form-control" id="description" name="description"></textarea>
                             </label>
                         </div>
+                        <input class="form-control" id="customer_id" type="hidden" value="{{customer_id}}">
                     </fieldset>
                 </form>
             </div>
