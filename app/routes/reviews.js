@@ -6,6 +6,7 @@ const request = require('request-promise-native');
 router.get('/', function(req, res, next) {
     const host = req.protocol + '://' + req.get('host');
     let context = {title: 'FoodTruckTracker - Reviews'};
+    context.customer_id = req.session.customer_id;
 
     request(`${host}/api/reviews`)
         .then(function(body) {
