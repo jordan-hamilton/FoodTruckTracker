@@ -155,7 +155,7 @@ function createReviewList() {
 }
 
 function setCreateButtonState() {
-    if (isNaN(document.getElementById('customer_id').value)) {
+    if (isNaN(parseInt(document.getElementById('customer_id').value))) {
 
         // Disable the 'write a review' button if a customer ID wasn't stored in the form from the Handlebars context
         let newReviewButton = document.getElementById('newReviewButton');
