@@ -180,6 +180,21 @@ const deleteLocation = function (request, response) {
         });
 };
 
+// Update a location
+const updateLocation = function (request, response) {
+    pool
+        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
+            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all review data
 const getReviews = function (request, response) {
     pool
@@ -228,6 +243,7 @@ module.exports = {
     deleteFoodTruck,
     getLocations,
     addLocation,
+    updateLocation,
     deleteLocation,
     getReviews,
     addReview

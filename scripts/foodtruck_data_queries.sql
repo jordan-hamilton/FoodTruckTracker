@@ -131,3 +131,13 @@ SET
   description = :descriptionInput,
   location = :locationInput
 WHERE id = :foodtruckIdInput;
+
+-- Update location information
+UPDATE Locations 
+SET
+  name = :nameInput,
+  address = :addressInput,
+  city = :cityInput,
+  state = :stateInput,
+  zip = :zipInput
+WHERE id = :locationIdInput;
