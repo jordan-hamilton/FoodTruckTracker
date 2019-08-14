@@ -130,6 +130,11 @@ function createReviewList() {
                 location.textContent = rev.loc_location;
                 reviewCardInfoPane.appendChild(location);
 
+                let date = document.createElement('h6');
+                date.setAttribute('class', 'ml-3');
+                date.textContent = rev.rev_date;
+                reviewCardInfoPane.appendChild(date);
+
                 let reviewCardBodyPane = document.createElement('div');
                 reviewCardBodyPane.setAttribute('class', 'col-md-8');
                 reviewCardRow.appendChild(reviewCardBodyPane);
