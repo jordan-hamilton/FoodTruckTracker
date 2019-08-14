@@ -45,6 +45,20 @@ const addCustomer = function (request, response) {
         });
 };
 
+// Delete a customer
+const deleteCustomer = function (request, response) {
+    pool
+        .query('DELETE from Customers WHERE id = ?;', [request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all food truck data
 const getFoodTrucks = function (request, response) {
     pool
@@ -193,6 +207,7 @@ const addReview = function (request, response) {
 module.exports = {
     getCustomers,
     addCustomer,
+    deleteCustomer,
     getFoodTrucks,
     addFoodTruck,
     updateFoodTruck,

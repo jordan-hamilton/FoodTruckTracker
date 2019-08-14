@@ -28,6 +28,32 @@ function bindSubmitButton() {
     });
 }
 
+function bindDeleteButtons() {
+    const customers = document.getElementById('customerList').children;
+
+    for (let i = 0; i < customers.length; i++) {
+        let deleteBtn = customers[i].getElementsByClassName('delete');
+        deleteBtn[0].addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const element = event.srcElement;
+            const id = element.parentElement.parentElement.getAttribute('id');
+
+            let request = new XMLHttpRequest();
+            request.open('DELETE', '/api/customers/' + id, true);
+            request.addEventListener('load', function () {
+                if (request.status >= 200 && request.status < 400) {
+                    createCustomerList();
+                } else {
+                    console.error(`An error occurred: ${request.statusText}`);
+                }
+            });
+
+            request.send(null);
+        });
+    }
+}
+
 function clearForm() {
     document.getElementById('firstname').value = '';
     document.getElementById('lastname').value = '';
@@ -48,28 +74,37 @@ function createCustomerList() {
 
             response.forEach(function (cust) {
                 let customer = document.createElement('tr');
+                customer.setAttribute('id', cust.id);
+                customerList.appendChild(customer);
 
                 let lastname = document.createElement('td');
                 lastname.textContent = cust.lastname;
+                customer.appendChild(lastname);
 
                 let firstname = document.createElement('td');
                 firstname.textContent = cust.firstname;
+                customer.appendChild(firstname);
 
                 let username = document.createElement('td');
+                customer.appendChild(username);
                 username.textContent = cust.username;
 
                 let email = document.createElement('td');
+                customer.appendChild(email);
                 email.textContent = cust.email;
 
-                customer.appendChild(lastname);
-                customer.appendChild(firstname);
-                customer.appendChild(username);
-                customer.appendChild(email);
-                customerList.appendChild(customer);
+                let deleteCell = document.createElement('td');
+                let deleteBtn = document.createElement('button');
+                deleteBtn.setAttribute('class', 'delete btn btn-outline-primary btn-sm');
+                deleteBtn.textContent = 'Delete';
+                deleteCell.appendChild(deleteBtn);
+                customer.appendChild(deleteCell);
             });
         } else {
             console.error(`An error occurred: ${request.statusText}`);
         }
+
+        bindDeleteButtons();
     });
 
     request.send(null);

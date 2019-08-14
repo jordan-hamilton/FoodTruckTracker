@@ -9,6 +9,9 @@ router.get('/customers', api.getCustomers);
 /* POST a new customer */
 router.post('/customers', api.addCustomer);
 
+/* DELETE a customer */
+router.delete('/customers/:id', api.deleteCustomer);
+
 /* GET all food trucks. */
 router.get('/food-trucks', api.getFoodTrucks);
 
