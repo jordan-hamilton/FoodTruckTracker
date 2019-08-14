@@ -28,6 +28,32 @@ function bindSubmitButton() {
     });
 }
 
+function bindDeleteButtons() {
+    const locations = document.getElementById('locationList').children;
+
+    for (let i = 0; i < locations.length; i++) {
+        let deleteBtn = locations[i].getElementsByClassName('delete');
+        deleteBtn[0].addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const element = event.srcElement;
+            const id = element.parentElement.getAttribute('id');
+
+            let request = new XMLHttpRequest();
+            request.open('DELETE', '/api/locations/' + id, true);
+            request.addEventListener('load', function () {
+                if (request.status >= 200 && request.status < 400) {
+                    createLocationList();
+                } else {
+                    console.error(`An error occurred: ${request.statusText}`);
+                }
+            });
+
+            request.send(null);
+        });
+    }
+}
+
 function clearForm() {
     document.getElementById('name').value = '';
     document.getElementById('address').value = '';
@@ -48,6 +74,7 @@ function createLocationList() {
 
             response.forEach(function (loc) {
                 let location = document.createElement('address');
+                location.setAttribute('id', loc.id);
                 location.setAttribute('class', 'col-sm-4');
                 locationList.appendChild(location);
 
@@ -66,11 +93,16 @@ function createLocationList() {
                 areaLine.textContent = loc.city + ', ' + loc.state + ' ' + loc.zip;
                 location.appendChild(areaLine);
 
-                locationList.appendChild(location);
+                let deleteBtn = document.createElement('button');
+                deleteBtn.setAttribute('class', 'delete btn btn-outline-primary btn-sm mt-2');
+                deleteBtn.textContent = 'Delete';
+                location.appendChild(deleteBtn);
             });
         } else {
             console.error(`An error occurred: ${request.statusText}`);
         }
+
+        bindDeleteButtons();
     });
 
     request.send(null);

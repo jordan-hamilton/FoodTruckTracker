@@ -166,6 +166,20 @@ const addLocation = function (request, response) {
         });
 };
 
+// Delete a location
+const deleteLocation = function (request, response) {
+    pool
+        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all review data
 const getReviews = function (request, response) {
     pool
@@ -214,6 +228,7 @@ module.exports = {
     deleteFoodTruck,
     getLocations,
     addLocation,
+    deleteLocation,
     getReviews,
     addReview
 };

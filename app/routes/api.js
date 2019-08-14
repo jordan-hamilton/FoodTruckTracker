@@ -30,6 +30,9 @@ router.get('/locations', api.getLocations);
 /* POST a new location */
 router.post('/locations', api.addLocation);
 
+/* DELETE a location */
+router.delete('/locations/:id', api.deleteLocation);
+
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);
 

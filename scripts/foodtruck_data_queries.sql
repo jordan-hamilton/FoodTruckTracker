@@ -103,6 +103,10 @@ DELETE FROM FoodTrucks WHERE id=:foodtruckIdInput
 -- Deleting a customer will also remove all reviews from the customer
 DELETE FROM Customers WHERE id=:customerIdInput
 
+-- Delete a location
+-- Deleting a location will set the location of a review to null
+DELETE FROM Locations WHERE id=:locationIdInput
+
 -- Delete a customer food truck relationship
 DELETE FROM Customers_FoodTrucks WHERE customer = :customerIdInput AND foodtruck = :foodtruckIdInput;
 
