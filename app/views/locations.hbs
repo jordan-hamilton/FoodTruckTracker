@@ -40,11 +40,13 @@
                                 </label>
                             </div>
                         </div>
+                        <input type="number" id="locationId" hidden>
+                        <input type="checkbox" id="update" hidden>
                     </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="submit">Add location</button>
+                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -52,7 +54,8 @@
 </div>
 
 <div class="container">
-    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newLocation">Add a new food
+    <button type="button" class="btn btn-primary mb-3" id="addLocation" data-toggle="modal"
+        data-target="#newLocation">Add a new food
         truck location</button>
 
     <div class="row" id="locationList"></div>

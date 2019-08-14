@@ -45,6 +45,20 @@ const addCustomer = function (request, response) {
         });
 };
 
+// Delete a customer
+const deleteCustomer = function (request, response) {
+    pool
+        .query('DELETE from Customers WHERE id = ?;', [request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all food truck data
 const getFoodTrucks = function (request, response) {
     pool
@@ -152,6 +166,35 @@ const addLocation = function (request, response) {
         });
 };
 
+// Delete a location
+const deleteLocation = function (request, response) {
+    pool
+        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Update a location
+const updateLocation = function (request, response) {
+    pool
+        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
+            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all review data
 const getReviews = function (request, response) {
     pool
@@ -193,12 +236,15 @@ const addReview = function (request, response) {
 module.exports = {
     getCustomers,
     addCustomer,
+    deleteCustomer,
     getFoodTrucks,
     addFoodTruck,
     updateFoodTruck,
     deleteFoodTruck,
     getLocations,
     addLocation,
+    updateLocation,
+    deleteLocation,
     getReviews,
     addReview
 };

@@ -9,6 +9,9 @@ router.get('/customers', api.getCustomers);
 /* POST a new customer */
 router.post('/customers', api.addCustomer);
 
+/* DELETE a customer */
+router.delete('/customers/:id', api.deleteCustomer);
+
 /* GET all food trucks. */
 router.get('/food-trucks', api.getFoodTrucks);
 
@@ -26,6 +29,12 @@ router.get('/locations', api.getLocations);
 
 /* POST a new location */
 router.post('/locations', api.addLocation);
+
+/* DELETE a location */
+router.delete('/locations/:id', api.deleteLocation);
+
+/* PUT (update) a location */
+router.put('/locations/:id', api.updateLocation);
 
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);

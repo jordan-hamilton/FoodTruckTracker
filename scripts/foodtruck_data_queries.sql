@@ -99,6 +99,14 @@ INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, descrip
 -- Deleting a food truck will also remove all reviews of the food truck
 DELETE FROM FoodTrucks WHERE id=:foodtruckIdInput
 
+-- Delete a customer
+-- Deleting a customer will also remove all reviews from the customer
+DELETE FROM Customers WHERE id=:customerIdInput
+
+-- Delete a location
+-- Deleting a location will set the location of a review to null
+DELETE FROM Locations WHERE id=:locationIdInput
+
 -- Delete a customer food truck relationship
 DELETE FROM Customers_FoodTrucks WHERE customer = :customerIdInput AND foodtruck = :foodtruckIdInput;
 
@@ -123,3 +131,13 @@ SET
   description = :descriptionInput,
   location = :locationInput
 WHERE id = :foodtruckIdInput;
+
+-- Update location information
+UPDATE Locations 
+SET
+  name = :nameInput,
+  address = :addressInput,
+  city = :cityInput,
+  state = :stateInput,
+  zip = :zipInput
+WHERE id = :locationIdInput;
