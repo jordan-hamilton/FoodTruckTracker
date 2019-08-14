@@ -19,7 +19,8 @@ function bindSubmitButton() {
 
         var request = new XMLHttpRequest();
         var payload = {};
-        payload.customer = '1';
+
+        payload.customer = document.getElementById('customer_id').value;
         payload.food_truck_id = document.getElementById('food_truck_id').value;
         payload.location_id = document.getElementById('location_id').value;
         payload.date = document.getElementById('date').value;
@@ -153,7 +154,32 @@ function createReviewList() {
     request.send(null);
 }
 
+function setCreateButtonState() {
+    if (isNaN(document.getElementById('customer_id').value)) {
+
+        // Disable the 'write a review' button if a customer ID wasn't stored in the form from the Handlebars context
+        let newReviewButton = document.getElementById('newReviewButton');
+        newReviewButton.setAttribute('disabled','disabled');
+        newReviewButton.setAttribute('style', 'pointer-events: none;');
+
+        // Make a wrapper around the button with a tooltip with instructions to create an account.
+        let wrapper = document.createElement('span');
+        wrapper.setAttribute('class', 'd-inline-block');
+        wrapper.setAttribute('data-toggle', 'tooltip');
+        wrapper.setAttribute('data-trigger', 'manual');
+        wrapper.setAttribute('data-html', 'true');
+        wrapper.setAttribute('title', 'Create a <a href=\"/customers\">customer account</a> to start writing reviews.');
+        $(newReviewButton).wrap(wrapper);
+
+        // Initialize and persist the tooltip
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip('show');
+        })
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function(event) {
     createReviewList();
+    setCreateButtonState();
     bindSubmitButton();
 });
