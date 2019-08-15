@@ -32,7 +32,7 @@ function bindSubmitButton() {
             if (request.status >= 200 && request.status < 400) {
                 handleCustomersFoodTrucks();
             } else {
-                console.error(`An error occurred: ${request.statusText}`)
+                console.error(`An error occurred: ${request.statusText}`);
                 //document.getElementById('result').textContent = 'An error occurred when attempting to add this review. Please ensure all values in the form above have been filled, then try again.'
             }
         });
