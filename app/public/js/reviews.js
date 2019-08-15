@@ -151,9 +151,9 @@ function bindUsernameFilterButton() {
         }
         form.classList.add('was-validated');
 
-        var username = document.getElementById('usernameFilter').value;
+        var customerId = document.getElementById('usernameFilter').value;
 
-        createReviewList(`/api/reviews/username/${username}`);
+        createReviewList(`/api/reviews/customer/${customerId}`);
         document.getElementById('resetFilterSection').removeAttribute('hidden');
         document.getElementById('foodTruckFilterForm').setAttribute('hidden', 'hidden');
         document.getElementById('minRatingFilterForm').setAttribute('hidden', 'hidden');
