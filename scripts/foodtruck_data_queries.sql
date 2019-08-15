@@ -6,7 +6,7 @@
 --   data from the backend programming language
 
 --
--- SELECT functions for customers 
+-- SELECT functions for customers
 --
 -- Select all customers from table `Customers`
 SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;
@@ -15,19 +15,19 @@ SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname
 SELECT cust.id, cust.firstname, cust.lastname, cust.username FROM Customers AS cust
 INNER JOIN Customers_FoodTrucks AS cft ON cft.customer = cust.id
 INNER JOIN FoodTrucks AS ft ON ft.id = cft.foodtruck
-WHERE ft.id = :foodtruckIdInput 
+WHERE ft.id = :foodtruckIdInput
 ORDER BY cust.lastname, cust.firstname ASC;
 
 --
 -- SELECT functions for food trucks
--- 
+--
 -- Select all food trucks from table `FoodTrucks`
 SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip
 FROM FoodTrucks AS ft
-LEFT JOIN Locations AS loc ON loc.id = ft.location 
+LEFT JOIN Locations AS loc ON loc.id = ft.location
 ORDER BY ft.name ASC;
 
--- Select all food trucks at a specified location 
+-- Select all food trucks at a specified location
 SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip
 FROM FoodTrucks AS ft
 INNER JOIN Locations AS loc ON loc.id = ft.location
@@ -35,19 +35,19 @@ WHERE ft.location = :locationIdInput
 
 --
 -- SELECT functions for locations
--- 
+--
 -- Select all locations from table `Locations`
 SELECT id, name, address, city, state, zip FROM Locations ORDER BY name ASC;
 
 --
 -- SELECT functions for reviews
--- 
+--
 -- Select all reviews from table `Reviews`
 SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
 INNER JOIN Locations AS loc ON loc.id = rev.location
-INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck 
+INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
 ORDER BY rev.date DESC;
 
 -- Select all reviews from table `Reviews` with a specified minimum rating
@@ -64,7 +64,7 @@ FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
 INNER JOIN Locations AS loc ON loc.id = rev.location
 INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
-WHERE cust.id = :customerIdInput;
+WHERE cust.username LIKE %:customerUsernameInput%;
 
 -- Select all reviews for a specified food truck
 SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description
@@ -114,7 +114,7 @@ DELETE FROM Customers_FoodTrucks WHERE customer = :customerIdInput AND foodtruck
 -- UPDATE functions
 --
 -- Update a review written by a customer
-UPDATE Reviews 
+UPDATE Reviews
 SET
   date = CURRENT_DATE(),
   title = :titleInput,
@@ -133,7 +133,7 @@ SET
 WHERE id = :foodtruckIdInput;
 
 -- Update location information
-UPDATE Locations 
+UPDATE Locations
 SET
   name = :nameInput,
   address = :addressInput,
