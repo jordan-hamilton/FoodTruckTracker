@@ -216,10 +216,11 @@ const getReviews = function (request, response) {
         .query({
             dateStrings: true,
             nestTables: '_',
-            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, \n' +
+                'loc.name AS location, rev.title, rev.description\n' +
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
                 'ORDER BY rev.date DESC;'
         })
