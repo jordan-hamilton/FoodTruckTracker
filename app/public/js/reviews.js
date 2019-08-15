@@ -10,13 +10,10 @@ function bindSubmitButton() {
             return;
         }
         form.classList.add('was-validated');
+        handleReviews();
+    });
 
-        // Get the text of the selected options, not their IDs, so we can append them directly to the table of reviews.
-        var foodTruckSelector = document.getElementById('food_truck_id');
-        var foodTruckText = foodTruckSelector.options[foodTruckSelector.selectedIndex].text;
-        var locationSelector = document.getElementById('location_id');
-        var locationText = locationSelector.options[locationSelector.selectedIndex].text;
-
+    function handleReviews() {
         var request = new XMLHttpRequest();
         var payload = {};
 
@@ -41,7 +38,7 @@ function bindSubmitButton() {
         });
 
         request.send(JSON.stringify(payload));
-    });
+    }
 
     function handleCustomersFoodTrucks() {
         var request = new XMLHttpRequest();
@@ -57,10 +54,13 @@ function bindSubmitButton() {
                 $('#newReview').modal('hide');
                 clearForm();
                 createReviewList('/api/reviews/');
+
+                // Reset review filters after submitting a review, so a new review is always visible upon submission
                 document.getElementById('resetFilterSection').setAttribute('hidden', 'hidden');
                 document.getElementById('foodTruckFilterForm').removeAttribute('hidden');
                 document.getElementById('minRatingFilterForm').removeAttribute('hidden');
                 document.getElementById('usernameFilterForm').removeAttribute('hidden');
+
             } else {
                 console.error(`An error occurred: ${request.statusText}`)
                 //document.getElementById('result').textContent = 'An error occurred when attempting to add this review. Please ensure all values in the form above have been filled, then try again.'
@@ -68,7 +68,6 @@ function bindSubmitButton() {
         });
 
         request.send(JSON.stringify(payload));
-
     }
 
 }
@@ -171,6 +170,8 @@ function clearForm() {
     document.getElementById('rating').value = '';
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
+    let form = document.getElementById('modalForm');
+    form.classList.remove('was-validated');
 }
 
 function createReview(rev, reviewList) {
