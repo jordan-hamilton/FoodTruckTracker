@@ -18,7 +18,11 @@ router.get('/', function(req, res, next) {
             return request(`${host}/api/locations`);
         })
         .then(function(body) {
-           context.location = JSON.parse(body);
+            context.location = JSON.parse(body);
+            return request(`${host}/api/customers`);
+        })
+        .then(function(body) {
+           context.customer = JSON.parse(body);
            res.render('reviews', context);
         })
         .catch(function (err) {
