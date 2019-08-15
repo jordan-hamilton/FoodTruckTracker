@@ -1,24 +1,23 @@
-<form>
-    <fieldset>
-        Customer
-        <select name="customer" autofocus required>
+<form class="form-inline mb-3 needs-validation" id="relationshipForm" novalidate>
+    <div class="form-group">
+        <label for="customer">Customer </label>
+        <select class="form-control mx-sm-2" id="customer" name="customer" required>
             <option value=""></option>
-            <option value="1">Michaela Rose</option>
-            <option value="2">Anila Freeman</option>
-            <option value="3">Bryan Barnes</option>
-            <option value="4">Alvin Willis</option>
-            <option value="5">Fred Harper</option>
+            {{#each customer}}
+                <option value="{{id}}">{{username}}</option>
+            {{/each}}
         </select>
-        <br>
-        Food Truck
-        <select name="foodtruck" required>
+        <label for="foodTruck">has eaten at </label>
+        <select class="form-control mx-sm-2" id="foodTruck" name="foodTruck" required>
             <option value=""></option>
-            <option value="1">Pecos Pit Bar-B-Que</option>
-            <option value="2">NaanSense</option>
-            <option value="4">Biker Jim's Gourmet Dogs</option>
-            <option value="5">Migration Taco</option>
+            {{#each foodTruck}}
+                <option value="{{ft_id}}">{{ft_name}}</option>
+            {{/each}}
         </select>
-        <input type="submit" value="Create relationship">
-    </fieldset>
+        <button class="btn btn-primary" id="relationshipButton" type="button">Join this food truck's network</button>
+    </div>
 </form>
+<div class="container">
+    <div class="accordion" id="relationshipList"></div>
+</div>
 <script src="./js/customersFoodTrucks.js"></script>
