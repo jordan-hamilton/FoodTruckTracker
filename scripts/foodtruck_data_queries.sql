@@ -78,19 +78,24 @@ WHERE ft.id = :foodtruckIdInput
 -- INSERT new rows into DB tables
 --
 -- Add a new customer into table `Customers`
-INSERT INTO Customers (username, firstname, lastname, email, password) VALUES (:usernameInput, :firstnameInput, :lastnameInput, :emailInput, AES_ENCRYPT(:passwordInput, 'cuddlynarwhal'));
+INSERT INTO Customers (username, firstname, lastname, email, password) 
+VALUES (:usernameInput, :firstnameInput, :lastnameInput, :emailInput, AES_ENCRYPT(:passwordInput, 'cuddlynarwhal'));
 
 -- Add a new location into table `Locations`
-INSERT INTO Locations (name, address, city, state, zip) VALUES (:nameInput, :addressInput, :cityInput, :stateInput, :zipInput);
+INSERT INTO Locations (name, address, city, state, zip) 
+VALUES (:nameInput, :addressInput, :cityInput, :stateInput, :zipInput);
 
 -- Add a new food truck into table `FoodTrucks`
-INSERT INTO FoodTrucks (name, description, location) VALUES (:nameInput, :descriptionInput, :locationIdInput);
+INSERT INTO FoodTrucks (name, description) 
+VALUES (:nameInput, :descriptionInput);
 
 -- Add a new customer food truck relationship into table `Customers_FoodTrucks`
-INSERT INTO Customers_FoodTrucks (customer, foodtruck) VALUES (:customerIdInput, :foodtruckIdInput);
+INSERT INTO Customers_FoodTrucks (customer, foodtruck) 
+VALUES (:customerIdInput, :foodtruckIdInput);
 
 -- Add a new review into table `Reviews`
-INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) VALUES (:customerIdInput, :dateInput, :titleInput, :ratingInput, :foodtruckIdInput, :locationIdInput, :descriptionInput);
+INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) 
+VALUES (:customerIdInput, :dateInput, :titleInput, :ratingInput, :foodtruckIdInput, :locationIdInput, :descriptionInput);
 
 --
 -- DELETE functions
@@ -129,7 +134,6 @@ UPDATE FoodTrucks
 SET
   name = :nameInput,
   description = :descriptionInput,
-  location = :locationInput
 WHERE id = :foodtruckIdInput;
 
 -- Update customer information

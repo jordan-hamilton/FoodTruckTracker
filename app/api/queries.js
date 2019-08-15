@@ -111,8 +111,8 @@ const getFoodTrucks = function (request, response) {
 // Add a food truck
 const addFoodTruck = function (request, response) {
     pool
-        .query('INSERT INTO FoodTrucks (name, description, location) VALUES (?, ?, ?);',
-            [request.body.name, request.body.description, request.body.location])
+        .query('INSERT INTO FoodTrucks (name, description) VALUES (?, ?);',
+            [request.body.name, request.body.description])
         .then(function (row) {
             console.log(row);
             response.status(200);

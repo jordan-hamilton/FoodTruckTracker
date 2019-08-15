@@ -6,12 +6,8 @@ function bindAddButton() {
         $('#newFoodTruck').on('show.bs.modal', function (event) {
             var modal = $(this);
             var title = 'Add a new food truck';
-            var location = modal.find('#location');
             modal.find('.modal-title').text(title);
             modal.find('#name').val('');
-            location.val('');
-            location.removeClass('no-arrow');
-            location.prop('disabled', false);
             modal.find('#description').val('');
             modal.find('#foodTruckId').val('');
             modal.find('#update').prop('checked', false);
@@ -30,7 +26,6 @@ function bindUpdateButtons() {
             const id = element.parentElement.parentElement.getAttribute('id');
             const card = document.getElementById(id);
             const name = card.getElementsByClassName('card-title')[0].textContent;
-            const locId = card.firstChild.getAttribute('data-location')
 
             const description = card.getElementsByClassName('card-text')[0].textContent;
 
@@ -38,12 +33,8 @@ function bindUpdateButtons() {
             $('#newFoodTruck').on('show.bs.modal', function (event) {
                 var modal = $(this);
                 var title = 'Edit food truck information';
-                var location = modal.find('#location');
                 modal.find('.modal-title').text(title);
                 modal.find('#name').val(name);
-                location.val(locId);
-                location.addClass('no-arrow');
-                location.prop('disabled', true);
                 modal.find('#description').val(description);
                 modal.find('#foodTruckId').val(id);
                 modal.find('#update').prop('checked', true);
@@ -61,7 +52,6 @@ function bindSubmitButton() {
         let payload = {};
         payload.name = document.getElementById('name').value;
         payload.description = document.getElementById('description').value;
-        payload.location = document.getElementById('location').value;
 
         const id = document.getElementById('foodTruckId').value;
         const update = document.getElementById('update').checked;
@@ -116,32 +106,7 @@ function bindDeleteButtons() {
 function clearForm() {
     document.getElementById('name').value = '';
     document.getElementById('description').value = '';
-    document.getElementById('location').selectedIndex = 0;
 }
-
-function createLocationList() {
-    let request = new XMLHttpRequest();
-    request.open('GET', '/api/locations/', true);
-    request.addEventListener('load', function () {
-        if (request.status >= 200 && request.status < 400) {
-            const response = JSON.parse(request.responseText);
-
-            let locationList = document.getElementById('location');
-
-            response.forEach(function (loc) {
-                let location = document.createElement('option');
-                location.setAttribute('value', loc.id);
-                location.textContent = loc.name;
-                locationList.appendChild(location);
-            });
-        } else {
-            console.error(`An error occurred: ${request.statusText}`);
-        }
-    });
-
-    request.send(null);
-}
-
 
 function createFoodTruckList() {
     let request = new XMLHttpRequest();
@@ -217,7 +182,6 @@ function createFoodTruckList() {
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
-    createLocationList();
     createFoodTruckList();
     bindAddButton();
     bindSubmitButton();

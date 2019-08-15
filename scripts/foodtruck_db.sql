@@ -62,11 +62,7 @@ CREATE TABLE FoodTrucks (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL, 
   description text,
-  location int(11),
-  PRIMARY KEY (id),
-  FOREIGN KEY (location) REFERENCES Locations (id)
-  ON UPDATE CASCADE
-  ON DELETE SET NULL
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
 --
@@ -74,10 +70,11 @@ CREATE TABLE FoodTrucks (
 --
 LOCK TABLES FoodTrucks WRITE;
 INSERT INTO FoodTrucks VALUES 
-(1, 'Pecos Pit Bar-B-Que', "We are excited to announce your longtime local Seattle staple Pecos Pit BBQ has hit the street with it's shiny new food truck! Pecos Pit is known for our NW style slow roasted, wood smoked BBQ along side top notch service, and unlimited smiles (smiles on the house!) Our truck will be serving up everything from our trip down memory lane classic Frito Pies to our famous deliciously sloppy sandwiches. (Menu to change daily) Make sure to join us on any of our social medias to keep up to date on our food truck progress.", 4), 
-(2, 'NaanSense', "Authentic Home-style Indian Food NaanSense food truck offers delicious Indian food, made from scratch every day, and always with the best ingredients and never with anything artificial. We are 2 chefs who set out to bring affordable, authentic, Indian food to the streets of Seattle. Sourced locally whenever possible, we prepare our food with only all natural ingredients and love. Follow us on Facebook or twitter for our awesome daily vegetarian and non-vegetarian specials. We hope to see and serve you soon.", 3),(3, 'Basic Kneads Pizza', "All our pizzas are cooked on-site, in our mobile wood-fired oven. When we serve a pizza, we have to warn people to be careful, they are bubbling hot, with steam filling the air above. We toss our salads right at your event, and our cooks come to you. We feel it’s that important.", 1), 
-(4, "Biker Jim's Gourmet Dogs", "Biker Jim’s craveable concept pimps 15 gourmet sausages, ranging from wild boar and Alaskan reindeer to pheasant cordon bleu and an award-winning vegan dog. Toppings are limited only by your imagination, and we have a killer condiment bar with all the fixings, including locally made Elevation ketchup. Our proprietary dogs, served on fresh-baked-rolls, and sourced from the best purveyors, are plump and juicy, ridiculously good and a whole lot of fun to eat.", 2), 
-(5, 'Migration Taco', "Migration Taco is Denver’s first and (we hope!) best vegan taco truck. Our menu includes delicious vegan tacos, nachos, mac & cheese, relleno rolls, burritos, and more, all made in house with organic and local ingredients when possible.", NULL);
+(1, 'Pecos Pit Bar-B-Que', "We are excited to announce your longtime local Seattle staple Pecos Pit BBQ has hit the street with it's shiny new food truck! Pecos Pit is known for our NW style slow roasted, wood smoked BBQ along side top notch service, and unlimited smiles (smiles on the house!) Our truck will be serving up everything from our trip down memory lane classic Frito Pies to our famous deliciously sloppy sandwiches. (Menu to change daily) Make sure to join us on any of our social medias to keep up to date on our food truck progress."), 
+(2, 'NaanSense', "Authentic Home-style Indian Food NaanSense food truck offers delicious Indian food, made from scratch every day, and always with the best ingredients and never with anything artificial. We are 2 chefs who set out to bring affordable, authentic, Indian food to the streets of Seattle. Sourced locally whenever possible, we prepare our food with only all natural ingredients and love. Follow us on Facebook or twitter for our awesome daily vegetarian and non-vegetarian specials. We hope to see and serve you soon."),
+(3, 'Basic Kneads Pizza', "All our pizzas are cooked on-site, in our mobile wood-fired oven. When we serve a pizza, we have to warn people to be careful, they are bubbling hot, with steam filling the air above. We toss our salads right at your event, and our cooks come to you. We feel it’s that important."), 
+(4, "Biker Jim's Gourmet Dogs", "Biker Jim’s craveable concept pimps 15 gourmet sausages, ranging from wild boar and Alaskan reindeer to pheasant cordon bleu and an award-winning vegan dog. Toppings are limited only by your imagination, and we have a killer condiment bar with all the fixings, including locally made Elevation ketchup. Our proprietary dogs, served on fresh-baked-rolls, and sourced from the best purveyors, are plump and juicy, ridiculously good and a whole lot of fun to eat."), 
+(5, 'Migration Taco', "Migration Taco is Denver’s first and (we hope!) best vegan taco truck. Our menu includes delicious vegan tacos, nachos, mac & cheese, relleno rolls, burritos, and more, all made in house with organic and local ingredients when possible.");
 UNLOCK TABLES;
 
 -- 
