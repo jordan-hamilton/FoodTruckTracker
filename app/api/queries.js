@@ -188,9 +188,11 @@ const addCustomerFoodTruck = function (request, response) {
 
 // Delete a customer food truck relationship
 const deleteCustomerFoodTruck = function (request, response) {
+    console.log(`CUSTID: ${request.body.customer_id}`);
+    console.log(`FTID: ${request.body.food_truck_id}`);
     pool
         .query('DELETE FROM Customers_FoodTrucks WHERE customer = ? AND foodtruck = ?;',
-            [request.body.customer_id, request.body.food_truck_id])
+            [request.params.customer_id, request.params.food_truck_id])
         .then(function (row) {
             console.log(row);
             response.status(200);

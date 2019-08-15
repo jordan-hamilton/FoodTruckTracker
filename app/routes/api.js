@@ -34,7 +34,7 @@ router.delete('/food-trucks/:id', api.deleteFoodTruck);
 router.post('/customers-food-trucks', api.addCustomerFoodTruck);
 
 /* DELETE a customer-food truck relationship */
-router.delete('/customers-food-trucks', api.deleteCustomerFoodTruck);
+router.delete('/customers-food-trucks/customer/:customer_id/food-truck/:food_truck_id', api.deleteCustomerFoodTruck);
 
 /* GET all locations. */
 router.get('/locations', api.getLocations);
