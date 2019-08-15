@@ -218,6 +218,84 @@ const getReviews = function (request, response) {
         });
 };
 
+//Select all reviews for a specified food truck
+const getReviewsByFoodTruck = function (request, response) {
+    pool
+        .query({
+                dateStrings: true,
+                namedPlaceholders: true,
+                nestTables: '_',
+                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                    'FROM Reviews AS rev\n' +
+                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'WHERE ft.id = :id;'
+            },
+            {id: request.params.id}
+        )
+        .then(function (rows) {
+            console.log(rows);
+            response.status(200);
+            response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Select all reviews from table `Reviews` with a specified minimum rating
+const getReviewsByRating = function (request, response) {
+    pool
+        .query({
+                dateStrings: true,
+                namedPlaceholders: true,
+                nestTables: '_',
+                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                    'FROM Reviews AS rev\n' +
+                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                    'WHERE rev.rating >= :minRating;'
+            },
+            {minRating: request.params.minRating}
+        )
+        .then(function (rows) {
+            console.log(rows);
+            response.status(200);
+            response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Select all reviews from table `Reviews` from a specified username using wildcards
+const getReviewsByUsername = function (request, response) {
+    pool
+        .query({
+                dateStrings: true,
+                namedPlaceholders: true,
+                nestTables: '_',
+                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                    'FROM Reviews AS rev\n' +
+                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                    'WHERE cust.username LIKE :username;'
+            },
+            {username: '%' + request.params.username + '%'}
+        )
+        .then(function (rows) {
+            console.log(rows);
+            response.status(200);
+            response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Add a new review
 const addReview = function (request, response) {
     pool
@@ -246,5 +324,8 @@ module.exports = {
     updateLocation,
     deleteLocation,
     getReviews,
+    getReviewsByFoodTruck,
+    getReviewsByRating,
+    getReviewsByUsername,
     addReview
 };

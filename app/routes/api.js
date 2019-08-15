@@ -39,6 +39,15 @@ router.put('/locations/:id', api.updateLocation);
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);
 
+/* GET all reviews of a specific food truck. */
+router.get('/reviews/food-truck/:id', api.getReviewsByFoodTruck);
+
+/* GET all reviews over a specific rating. */
+router.get('/reviews/rating/:minRating', api.getReviewsByRating);
+
+/* GET all reviews from a specified username using wildcards. */
+router.get('/reviews/username/:username', api.getReviewsByUsername);
+
 /* POST a new review */
 router.post('/reviews', api.addReview);
 
