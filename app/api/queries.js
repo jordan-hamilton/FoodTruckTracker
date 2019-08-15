@@ -245,8 +245,9 @@ const getReviewsByFoodTruck = function (request, response) {
                     'FROM Reviews AS rev\n' +
                     'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
                     'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                    'WHERE ft.id = :id;'
+                    'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'WHERE ft.id = :id\n' +
+                    'ORDER BY rev.date DESC;'
             },
             {id: request.params.id}
         )
@@ -270,9 +271,10 @@ const getReviewsByRating = function (request, response) {
                 sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
                     'FROM Reviews AS rev\n' +
                     'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                     'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'WHERE rev.rating >= :minRating;'
+                    'WHERE rev.rating >= :minRating\n' +
+                    'ORDER BY rev.date DESC;'
             },
             {minRating: request.params.minRating}
         )
@@ -296,9 +298,10 @@ const getReviewsByUsername = function (request, response) {
                 sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
                     'FROM Reviews AS rev\n' +
                     'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                    'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                     'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'WHERE cust.username LIKE :username;'
+                    'WHERE cust.username LIKE :username\n' +
+                    'ORDER BY rev.date DESC;'
             },
             {username: '%' + request.params.username + '%'}
         )
