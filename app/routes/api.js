@@ -6,6 +6,9 @@ var api = require('../api/queries.js');
 /* GET all customers. */
 router.get('/customers', api.getCustomers);
 
+/* GET customers by food truck. */
+router.get('/customers/food-truck/:id', api.getCustomersByFoodTruck);
+
 /* POST a new customer */
 router.post('/customers', api.addCustomer);
 
@@ -26,6 +29,12 @@ router.put('/food-trucks/:id', api.updateFoodTruck);
 
 /* DELETE a food truck */
 router.delete('/food-trucks/:id', api.deleteFoodTruck);
+
+/* POST a new customer-food truck relationship */
+router.post('/customers-food-trucks', api.addCustomerFoodTruck);
+
+/* DELETE a customer-food truck relationship */
+router.delete('/customers-food-trucks', api.deleteCustomerFoodTruck);
 
 /* GET all locations. */
 router.get('/locations', api.getLocations);

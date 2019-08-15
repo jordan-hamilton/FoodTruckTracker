@@ -17,7 +17,26 @@ pool.getConnection()
 // Select all customer data
 const getCustomers = function (request, response) {
     pool
-        .query("SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;")
+        .query('SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;')
+        .then(function (rows) {
+            console.log(rows);
+            response.status(200);
+            response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+//Select all customers who have eaten at a specified food truck
+const getCustomersByFoodTruck = function (request, response) {
+    pool
+        .query('SELECT cust.id, cust.firstname, cust.lastname, cust.username FROM Customers AS cust\n' +
+            'INNER JOIN Customers_FoodTrucks AS cft ON cft.customer = cust.id\n' +
+            'INNER JOIN FoodTrucks AS ft ON ft.id = cft.foodtruck\n' +
+            'WHERE ft.id = ?\n' +
+            'ORDER BY cust.lastname, cust.firstname ASC;',
+            [request.params.id])
         .then(function (rows) {
             console.log(rows);
             response.status(200);
@@ -142,6 +161,36 @@ const updateFoodTruck = function (request, response) {
 const deleteFoodTruck = function (request, response) {
     pool
         .query('DELETE from FoodTrucks WHERE id = ?;', [request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Add a new customer food truck relationship into table `Customers_FoodTrucks`
+const addCustomerFoodTruck = function (request, response) {
+    pool
+        .query('INSERT INTO Customers_FoodTrucks (customer, foodtruck) VALUES (?, ?);',
+            [request.body.customer_id, request.body.food_truck_id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Delete a customer food truck relationship
+const deleteCustomerFoodTruck = function (request, response) {
+    pool
+        .query('DELETE FROM Customers_FoodTrucks WHERE customer = ? AND foodtruck = ?;',
+            [request.body.customer_id, request.body.food_truck_id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -332,6 +381,7 @@ const addReview = function (request, response) {
 
 module.exports = {
     getCustomers,
+    getCustomersByFoodTruck,
     addCustomer,
     updateCustomer,
     deleteCustomer,
@@ -339,6 +389,8 @@ module.exports = {
     addFoodTruck,
     updateFoodTruck,
     deleteFoodTruck,
+    addCustomerFoodTruck,
+    deleteCustomerFoodTruck,
     getLocations,
     addLocation,
     updateLocation,
