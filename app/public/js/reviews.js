@@ -33,6 +33,27 @@ function bindSubmitButton() {
 
         request.addEventListener('load', function() {
             if (request.status >= 200 && request.status < 400) {
+                handleCustomersFoodTrucks();
+            } else {
+                console.error(`An error occurred: ${request.statusText}`)
+                //document.getElementById('result').textContent = 'An error occurred when attempting to add this review. Please ensure all values in the form above have been filled, then try again.'
+            }
+        });
+
+        request.send(JSON.stringify(payload));
+    });
+
+    function handleCustomersFoodTrucks() {
+        var request = new XMLHttpRequest();
+        var payload = {};
+        payload.customer_id = document.getElementById('customer_id').value;
+        payload.food_truck_id = document.getElementById('food_truck_id').value;
+
+        request.open('POST', '/api/customers-food-trucks', true);
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.addEventListener('load', function() {
+            if (request.status >= 200 && request.status < 400) {
                 $('#newReview').modal('hide');
                 clearForm();
                 createReviewList('/api/reviews/');
@@ -47,7 +68,9 @@ function bindSubmitButton() {
         });
 
         request.send(JSON.stringify(payload));
-    });
+
+    }
+
 }
 
 function bindResetButton() {
