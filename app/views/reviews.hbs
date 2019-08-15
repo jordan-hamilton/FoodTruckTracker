@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-primary" id= "newReviewButton" data-toggle="modal" data-target="#newReview">Write a new food truck review</button>
+<button type="button" class="btn btn-primary mb-3" id= "newReviewButton" data-toggle="modal" data-target="#newReview">Write a new food truck review</button>
 <div class="modal fade" id="newReview" tabindex="-1" role="dialog" aria-labelledby="newReviewLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -57,36 +57,49 @@
             </div>
             <div class="modal-footer">
                 <input class="btn btn-primary" id="submit" form="modalForm" type="submit" value="Submit review">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
-<br>
-Only show reviews for
-<select name="foodtruckIdInput" required>
-    <option value=""></option>
-    {{#each foodTruck}}
-        <option value="{{ft_id}}">{{ft_name}}</option>
-    {{/each}}
-</select>
-<br>
-Only show reviews with a rating of at least
-<select name="minRatingInput" required>
-    <option value=""></option>
-    <option value="5">5</option>
-    <option value="4">4</option>
-    <option value="3">3</option>
-    <option value="2">2</option>
-    <option value="1">1</option>
-</select> stars
-<br>
-Only show reviews written by
-<input type="search" placeholder="Username" spellcheck="false" id="username">
-<br>
-<button>Filter</button>
-<br>
-<a id="reset" href="#reset">Reset filters</a>
+<div class="mb-3 col-md-4" id="reviewFilters">
+    <form class="form-inline mb-1 needs-validation" id="foodTruckFilterForm" novalidate>
+        <div class="form-group">
+            <label for="foodTruckFilter">Only show reviews for</label>
+            <select class="form-control mx-sm-2" id="foodTruckFilter" name="foodTruckFilter" required>
+                <option value=""></option>
+                {{#each foodTruck}}
+                    <option value="{{ft_id}}">{{ft_name}}</option>
+                {{/each}}
+            </select>
+            <button class="btn btn-primary btn-sm" id="foodTruckFilterButton" type="button">Filter</button>
+        </div>
+    </form>
+    <form class="form-inline mb-1 needs-validation" id="minRatingFilterForm" novalidate>
+        <div class="form-group">
+            <label for="minRatingFilter">Only show reviews with a rating of at least</label>
+            <select class="form-control mx-sm-2" id="minRatingFilter" name="minRatingFilter">
+                <option value=""></option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select> stars
+            <button class="btn btn-primary btn-sm ml-1" id="minRatingFilterButton" type="button">Filter</button>
+        </div>
+    </form>
+    <form class="form-inline mb-1 needs-validation" id="usernameFilterForm" novalidate>
+        <div class="form-group">
+            <label for="usernameFilter">Only show reviews written by</label>
+            <input class="form-control mx-sm-2" id="usernameFilter" type="search" placeholder="Username" spellcheck="false" required>
+            <button class="btn btn-primary btn-sm" id="usernameFilterButton" type="button">Filter</button>
+        </div>
+    </form>
+</div>
+<div class="mb-1 col-md-4" id="resetFilterSection" hidden>
+    <a id="resetFilters" href="#reset">Reset filter</a>
+</div>
 <div class="container">
     <div class="accordion" id="reviewList"></div>
 </div>
