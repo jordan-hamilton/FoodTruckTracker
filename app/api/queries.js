@@ -45,6 +45,21 @@ const addCustomer = function (request, response) {
         });
 };
 
+// Update a customer
+const updateCustomer = function (request, response) {
+    pool
+        .query('UPDATE Customers SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?',
+            [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Delete a customer
 const deleteCustomer = function (request, response) {
     pool
@@ -59,7 +74,7 @@ const deleteCustomer = function (request, response) {
         });
 };
 
-// Select all food truck data
+// Select all food truck data including last reviewed location from the reviews table
 const getFoodTrucks = function (request, response) {
     pool
         .query({
@@ -166,10 +181,11 @@ const addLocation = function (request, response) {
         });
 };
 
-// Delete a location
-const deleteLocation = function (request, response) {
+// Update a location
+const updateLocation = function (request, response) {
     pool
-        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
+        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
+            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -180,11 +196,10 @@ const deleteLocation = function (request, response) {
         });
 };
 
-// Update a location
-const updateLocation = function (request, response) {
+// Delete a location
+const deleteLocation = function (request, response) {
     pool
-        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
-            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
+        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -236,6 +251,7 @@ const addReview = function (request, response) {
 module.exports = {
     getCustomers,
     addCustomer,
+    updateCustomer,
     deleteCustomer,
     getFoodTrucks,
     addFoodTruck,

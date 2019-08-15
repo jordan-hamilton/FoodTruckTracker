@@ -201,5 +201,6 @@ function createLocationList() {
 
 document.addEventListener('DOMContentLoaded', function (event) {
     createLocationList();
+    bindAddButton();
     bindSubmitButton();
 });

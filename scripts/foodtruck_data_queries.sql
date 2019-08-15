@@ -132,6 +132,15 @@ SET
   location = :locationInput
 WHERE id = :foodtruckIdInput;
 
+-- Update customer information
+UPDATE Customers 
+SET 
+  username = :usernameInput,
+  firstname = :firstNameInput,
+  lastname = :lastnameInput
+  email = :emailInput
+WHERE id = :customerIdInput
+
 -- Update location information
 UPDATE Locations 
 SET
