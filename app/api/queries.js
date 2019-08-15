@@ -45,6 +45,21 @@ const addCustomer = function (request, response) {
         });
 };
 
+// Update a customer
+const updateCustomer = function (request, response) {
+    pool
+        .query('UPDATE Customers SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?',
+            [request.body.username, request.body.firstname, request.body.lastname, request.body.email, request.params.id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Delete a customer
 const deleteCustomer = function (request, response) {
     pool
@@ -59,7 +74,7 @@ const deleteCustomer = function (request, response) {
         });
 };
 
-// Select all food truck data
+// Select all food truck data including last reviewed location from the reviews table
 const getFoodTrucks = function (request, response) {
     pool
         .query({
@@ -96,8 +111,8 @@ const getFoodTrucks = function (request, response) {
 // Add a food truck
 const addFoodTruck = function (request, response) {
     pool
-        .query('INSERT INTO FoodTrucks (name, description, location) VALUES (?, ?, ?);',
-            [request.body.name, request.body.description, request.body.location])
+        .query('INSERT INTO FoodTrucks (name, description) VALUES (?, ?);',
+            [request.body.name, request.body.description])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -166,10 +181,11 @@ const addLocation = function (request, response) {
         });
 };
 
-// Delete a location
-const deleteLocation = function (request, response) {
+// Update a location
+const updateLocation = function (request, response) {
     pool
-        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
+        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
+            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -180,11 +196,10 @@ const deleteLocation = function (request, response) {
         });
 };
 
-// Update a location
-const updateLocation = function (request, response) {
+// Delete a location
+const deleteLocation = function (request, response) {
     pool
-        .query('UPDATE Locations SET name = ?, address = ?, city = ?, state = ?, zip = ? WHERE id = ?;',
-            [request.body.name, request.body.address, request.body.city, request.body.state, request.body.zip, request.params.id])
+        .query('DELETE from Locations WHERE id = ?;', [request.params.id])
         .then(function (row) {
             console.log(row);
             response.status(200);
@@ -201,10 +216,11 @@ const getReviews = function (request, response) {
         .query({
             dateStrings: true,
             nestTables: '_',
-            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, \n' +
+                'loc.name AS location, rev.title, rev.description\n' +
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
                 'ORDER BY rev.date DESC;'
         })
@@ -314,6 +330,7 @@ const addReview = function (request, response) {
 module.exports = {
     getCustomers,
     addCustomer,
+    updateCustomer,
     deleteCustomer,
     getFoodTrucks,
     addFoodTruck,

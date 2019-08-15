@@ -9,6 +9,9 @@ router.get('/customers', api.getCustomers);
 /* POST a new customer */
 router.post('/customers', api.addCustomer);
 
+/* PUT (update) a customer */
+router.put('/customers/:id', api.updateCustomer);
+
 /* DELETE a customer */
 router.delete('/customers/:id', api.deleteCustomer);
 
@@ -30,11 +33,11 @@ router.get('/locations', api.getLocations);
 /* POST a new location */
 router.post('/locations', api.addLocation);
 
-/* DELETE a location */
-router.delete('/locations/:id', api.deleteLocation);
-
 /* PUT (update) a location */
 router.put('/locations/:id', api.updateLocation);
+
+/* DELETE a location */
+router.delete('/locations/:id', api.deleteLocation);
 
 /* GET all reviews. */
 router.get('/reviews', api.getReviews);
