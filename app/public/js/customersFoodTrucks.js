@@ -49,7 +49,7 @@ function clearForm() {
 }
 
 function createRelationship(ft, foodTruckCardRow) {
-    handleFoodTruck(ft);
+    handleFoodTruck();
 
     function handleFoodTruck() {
         let request = new XMLHttpRequest();
@@ -75,6 +75,13 @@ function createRelationship(ft, foodTruckCardRow) {
                     relationshipCardBodyText.textContent = relationship.username;
                     relationshipCardBody.appendChild(relationshipCardBodyText);
 
+                    let deleteBtn = document.createElement('button');
+                    deleteBtn.setAttribute('class', 'delete btn btn-outline-primary btn-sm');
+                    deleteBtn.setAttribute('id', relationship.id);
+                    deleteBtn.textContent = 'Delete';
+                    bindDeleteButton(deleteBtn);
+                    relationshipCardBody.appendChild(deleteBtn);
+
                     foodTruckCardRow.appendChild(relationshipCardBodyPane);
                 });
             } else {
@@ -83,7 +90,26 @@ function createRelationship(ft, foodTruckCardRow) {
         });
         request.send(null);
     }
-    
+}
+
+function bindDeleteButton(button) {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        let request = new XMLHttpRequest();
+        let customer_id = button.getAttribute('id');
+        let food_truck_id = button.parentElement.parentElement.parentElement.getAttribute('id');
+        request.open('DELETE', `/api/customers-food-trucks/customer/${customer_id}/food-truck/${food_truck_id}`, true);
+        request.addEventListener('load', function () {
+            if (request.status >= 200 && request.status < 400) {
+
+            } else {
+                console.error(`An error occurred: ${request.statusText}`);
+            }
+        });
+        request.send(null);
+        createRelationshipList();
+    });
 }
 
 function createRelationshipList() {
@@ -118,12 +144,12 @@ function createRelationshipList() {
                 foodTruckTitle.appendChild(foodTruckButton);
 
                 let foodTruckCard = document.createElement('div');
-                foodTruckCard.setAttribute('id', `foodTruckBody${ft.ft_id}`);
                 foodTruckCard.setAttribute('class', 'collapse show');
                 foodTruckCard.setAttribute('data-parent', '#relationshipList');
                 foodTruck.appendChild(foodTruckCard);
 
                 let foodTruckCardRow = document.createElement('div');
+                foodTruckCardRow.setAttribute('id', ft.ft_id);
                 foodTruckCardRow.setAttribute('class', 'row no-gutters');
                 foodTruckCard.appendChild(foodTruckCardRow);
 
