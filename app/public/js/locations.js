@@ -55,6 +55,15 @@ function bindSubmitButton() {
     document.getElementById('submit').addEventListener('click', function (event) {
         event.preventDefault();
 
+        let form = document.getElementById('modalForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
         var request = new XMLHttpRequest();
         var payload = {};
         payload.name = document.getElementById('name').value;
@@ -120,6 +129,8 @@ function clearForm() {
     document.getElementById('city').value = '';
     document.getElementById('state').value = '';
     document.getElementById('zip').value = '';
+    let form = document.getElementById('modalForm');
+    form.classList.remove('was-validated');
 }
 
 function createLocationList() {

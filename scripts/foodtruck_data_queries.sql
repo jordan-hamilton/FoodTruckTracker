@@ -21,10 +21,24 @@ ORDER BY cust.lastname, cust.firstname ASC;
 --
 -- SELECT functions for food trucks
 --
--- Select all food trucks from table `FoodTrucks`
-SELECT ft.id, ft.name, ft.description, loc.name, loc.address, loc.city, loc.state, loc.zip
-FROM FoodTrucks AS ft
-LEFT JOIN Locations AS loc ON loc.id = ft.location
+-- Select all food trucks from table `FoodTrucks` and latest location data from Reviews and Locations tables
+SELECT ft.id, ft.name, ft.description, rev.location, loc.name, loc.address, loc.city, loc.state, loc.zip
+FROM FoodTrucks ft 
+LEFT JOIN (
+  SELECT r.foodtruck AS foodtruck, r.location AS location
+  FROM Reviews r 
+  INNER JOIN ( 
+    SELECT r2.foodtruck, r2.location, MAX(date) AS last_rev 
+    FROM Reviews r2
+    GROUP BY foodtruck
+  ) AS R
+  ON R.foodtruck = r.foodtruck
+  AND R.last_rev = r.date
+  GROUP BY r.foodtruck, r.location
+) AS rev  
+ON rev.foodtruck = ft.id
+LEFT JOIN Locations loc
+ON loc.id = rev.location
 ORDER BY ft.name ASC;
 
 -- Select all food trucks at a specified location
@@ -81,8 +95,8 @@ ORDER BY rev.date DESC;
 -- INSERT new rows into DB tables
 --
 -- Add a new customer into table `Customers`
-INSERT INTO Customers (username, firstname, lastname, email, password)
-VALUES (:usernameInput, :firstnameInput, :lastnameInput, :emailInput, AES_ENCRYPT(:passwordInput, 'cuddlynarwhal'));
+INSERT INTO Customers (username, firstname, lastname, email, password) 
+VALUES (:usernameInput, :firstnameInput, :lastnameInput, :emailInput, AES_ENCRYPT(:passwordInput, :secret));
 
 -- Add a new location into table `Locations`
 INSERT INTO Locations (name, address, city, state, zip)
