@@ -104,13 +104,9 @@ function bindMinRatingFilterButton() {
         form.classList.add('was-validated');
 
         var minRatingSelector = document.getElementById('minRatingFilter');
-        var minRatingText = minRatingSelector.options[minRatingSelector.selectedIndex].text;
-        // Filter out any unrated reviews
-        if (isNaN(parseInt(minRatingText))) {
-            minRatingText = '0';
-        }
+        var minRating = minRatingSelector.options[minRatingSelector.selectedIndex].value;
 
-        createReviewList(`/api/reviews/rating/${minRatingText}`);
+        createReviewList(`/api/reviews/rating/${minRating}`);
         document.getElementById('resetFilterSection').removeAttribute('hidden');
         document.getElementById('foodTruckFilterForm').setAttribute('hidden', 'hidden');
         document.getElementById('usernameFilterForm').setAttribute('hidden', 'hidden');

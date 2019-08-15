@@ -68,25 +68,28 @@ ORDER BY rev.date DESC;
 SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
-INNER JOIN Locations AS loc ON loc.id = rev.location
+LEFT JOIN Locations AS loc ON loc.id = rev.location
 INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
-WHERE rev.rating >= :minRatingInput;
+WHERE rev.rating >= :minRatingInput
+ORDER BY rev.date DESC;
 
 -- Select all reviews from table `Reviews` from the specified customer
 SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
-INNER JOIN Locations AS loc ON loc.id = rev.location
+LEFT JOIN Locations AS loc ON loc.id = rev.location
 INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
-WHERE cust.username LIKE %:customerUsernameInput%;
+WHERE cust.username LIKE %:customerUsernameInput%
+ORDER BY rev.date DESC;
 
 -- Select all reviews for a specified food truck
 SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description
 FROM Reviews AS rev
 INNER JOIN Customers AS cust ON cust.id = rev.customer
 INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck
-INNER JOIN Locations AS loc ON loc.id = rev.location
+LEFT JOIN Locations AS loc ON loc.id = rev.location
 WHERE ft.id = :foodtruckIdInput
+ORDER BY rev.date DESC;
 
 --
 -- INSERT new rows into DB tables
@@ -96,19 +99,19 @@ INSERT INTO Customers (username, firstname, lastname, email, password)
 VALUES (:usernameInput, :firstnameInput, :lastnameInput, :emailInput, AES_ENCRYPT(:passwordInput, :secret));
 
 -- Add a new location into table `Locations`
-INSERT INTO Locations (name, address, city, state, zip) 
+INSERT INTO Locations (name, address, city, state, zip)
 VALUES (:nameInput, :addressInput, :cityInput, :stateInput, :zipInput);
 
 -- Add a new food truck into table `FoodTrucks`
-INSERT INTO FoodTrucks (name, description) 
+INSERT INTO FoodTrucks (name, description)
 VALUES (:nameInput, :descriptionInput);
 
 -- Add a new customer food truck relationship into table `Customers_FoodTrucks`
-INSERT INTO Customers_FoodTrucks (customer, foodtruck) 
+INSERT INTO Customers_FoodTrucks (customer, foodtruck)
 VALUES (:customerIdInput, :foodtruckIdInput);
 
 -- Add a new review into table `Reviews`
-INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description) 
+INSERT INTO Reviews (customer, date, title, rating, foodtruck, location, description)
 VALUES (:customerIdInput, :dateInput, :titleInput, :ratingInput, :foodtruckIdInput, :locationIdInput, :descriptionInput);
 
 --
@@ -151,8 +154,8 @@ SET
 WHERE id = :foodtruckIdInput;
 
 -- Update customer information
-UPDATE Customers 
-SET 
+UPDATE Customers
+SET
   username = :usernameInput,
   firstname = :firstNameInput,
   lastname = :lastnameInput

@@ -17,7 +17,26 @@ pool.getConnection()
 // Select all customer data
 const getCustomers = function (request, response) {
     pool
-        .query("SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;")
+        .query('SELECT id, lastname, firstname, username, email FROM Customers ORDER BY lastname, firstname ASC;')
+        .then(function (rows) {
+            console.log(rows);
+            response.status(200);
+            response.send(rows);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+//Select all customers who have eaten at a specified food truck
+const getCustomersByFoodTruck = function (request, response) {
+    pool
+        .query('SELECT cust.id, cust.firstname, cust.lastname, cust.username FROM Customers AS cust\n' +
+            'INNER JOIN Customers_FoodTrucks AS cft ON cft.customer = cust.id\n' +
+            'INNER JOIN FoodTrucks AS ft ON ft.id = cft.foodtruck\n' +
+            'WHERE ft.id = ?\n' +
+            'ORDER BY cust.lastname, cust.firstname ASC;',
+            [request.params.id])
         .then(function (rows) {
             console.log(rows);
             response.status(200);
@@ -152,6 +171,36 @@ const deleteFoodTruck = function (request, response) {
         });
 };
 
+// Add a new customer food truck relationship into table `Customers_FoodTrucks`
+const addCustomerFoodTruck = function (request, response) {
+    pool
+        .query('INSERT INTO Customers_FoodTrucks (customer, foodtruck) VALUES (?, ?);',
+            [request.body.customer_id, request.body.food_truck_id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
+// Delete a customer food truck relationship
+const deleteCustomerFoodTruck = function (request, response) {
+    pool
+        .query('DELETE FROM Customers_FoodTrucks WHERE customer = ? AND foodtruck = ?;',
+            [request.body.customer_id, request.body.food_truck_id])
+        .then(function (row) {
+            console.log(row);
+            response.status(200);
+            response.send(row);
+        })
+        .catch(function (err) {
+            response.status(500);
+        });
+};
+
 // Select all location data
 const getLocations = function (request, response) {
     pool
@@ -245,8 +294,9 @@ const getReviewsByFoodTruck = function (request, response) {
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                'WHERE ft.id = :id;'
+                'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'WHERE ft.id = :id\n' +
+                'ORDER BY rev.date DESC;'
         },
             { id: request.params.id }
         )
@@ -270,9 +320,10 @@ const getReviewsByRating = function (request, response) {
             sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                'WHERE rev.rating >= :minRating;'
+                'WHERE rev.rating >= :minRating\n' +
+                'ORDER BY rev.date DESC;'
         },
             { minRating: request.params.minRating }
         )
@@ -296,9 +347,10 @@ const getReviewsByUsername = function (request, response) {
             sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
                 'FROM Reviews AS rev\n' +
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                'WHERE cust.username LIKE :username;'
+                'WHERE cust.username LIKE :username\n' +
+                'ORDER BY rev.date DESC;'
         },
             { username: '%' + request.params.username + '%' }
         )
@@ -329,6 +381,7 @@ const addReview = function (request, response) {
 
 module.exports = {
     getCustomers,
+    getCustomersByFoodTruck,
     addCustomer,
     updateCustomer,
     deleteCustomer,
@@ -336,6 +389,8 @@ module.exports = {
     addFoodTruck,
     updateFoodTruck,
     deleteFoodTruck,
+    addCustomerFoodTruck,
+    deleteCustomerFoodTruck,
     getLocations,
     addLocation,
     updateLocation,
