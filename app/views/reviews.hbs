@@ -92,7 +92,12 @@
     <form class="form-inline mb-1 needs-validation" id="usernameFilterForm" novalidate>
         <div class="form-group">
             <label for="usernameFilter">Only show reviews written by</label>
-            <input class="form-control mx-sm-2" id="usernameFilter" type="search" placeholder="Username" spellcheck="false" required>
+            <select class="form-control mx-sm-2" id="usernameFilter" name="usernameFilter" required>
+                <option value=""></option>
+                {{#each customer}}
+                    <option value="{{id}}">{{username}}</option>
+                {{/each}}
+            </select>
             <button class="btn btn-primary btn-sm" id="usernameFilterButton" type="button">Filter</button>
         </div>
     </form>
