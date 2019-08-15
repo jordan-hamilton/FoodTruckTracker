@@ -35,7 +35,11 @@ function bindSubmitButton() {
             if (request.status >= 200 && request.status < 400) {
                 $('#newReview').modal('hide');
                 clearForm();
-                createReviewList();
+                createReviewList('/api/reviews/');
+                document.getElementById('resetFilterSection').setAttribute('hidden', 'hidden');
+                document.getElementById('foodTruckFilterForm').removeAttribute('hidden');
+                document.getElementById('minRatingFilterForm').removeAttribute('hidden');
+                document.getElementById('usernameFilterForm').removeAttribute('hidden');
             } else {
                 console.error(`An error occurred: ${request.statusText}`)
                 //document.getElementById('result').textContent = 'An error occurred when attempting to add this review. Please ensure all values in the form above have been filled, then try again.'
@@ -43,6 +47,101 @@ function bindSubmitButton() {
         });
 
         request.send(JSON.stringify(payload));
+    });
+}
+
+function bindResetButton() {
+    document.getElementById('resetFilters').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        createReviewList('/api/reviews/');
+        document.getElementById('resetFilterSection').setAttribute('hidden', 'hidden');
+        document.getElementById('foodTruckFilterForm').removeAttribute('hidden');
+        document.getElementById('minRatingFilterForm').removeAttribute('hidden');
+        document.getElementById('usernameFilterForm').removeAttribute('hidden');
+
+    });
+}
+
+function bindFoodTruckFilterButton() {
+    document.getElementById('foodTruckFilterButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        let form = document.getElementById('foodTruckFilterForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
+        var foodTruckSelector = document.getElementById('foodTruckFilter');
+        var foodTruckId = foodTruckSelector.options[foodTruckSelector.selectedIndex].value;
+
+        createReviewList(`/api/reviews/food-truck/${foodTruckId}`);
+        document.getElementById('resetFilterSection').removeAttribute('hidden');
+        document.getElementById('minRatingFilterForm').setAttribute('hidden', 'hidden');
+        document.getElementById('usernameFilterForm').setAttribute('hidden', 'hidden');
+
+        // Remove the form validation status indicator after successfully filtering
+        form.classList.remove('was-validated');
+    });
+
+}
+
+function bindMinRatingFilterButton() {
+    document.getElementById('minRatingFilterButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        let form = document.getElementById('minRatingFilterForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
+        var minRatingSelector = document.getElementById('minRatingFilter');
+        var minRatingText = minRatingSelector.options[minRatingSelector.selectedIndex].text;
+        // Filter out any unrated reviews
+        if (isNaN(parseInt(minRatingText))) {
+            minRatingText = '0';
+        }
+
+        createReviewList(`/api/reviews/rating/${minRatingText}`);
+        document.getElementById('resetFilterSection').removeAttribute('hidden');
+        document.getElementById('foodTruckFilterForm').setAttribute('hidden', 'hidden');
+        document.getElementById('usernameFilterForm').setAttribute('hidden', 'hidden');
+
+        // Remove the form validation status indicator after successfully filtering
+        form.classList.remove('was-validated');
+    });
+}
+
+function bindUsernameFilterButton() {
+    document.getElementById('usernameFilterButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        let form = document.getElementById('usernameFilterForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
+        var username = document.getElementById('usernameFilter').value;
+
+        createReviewList(`/api/reviews/username/${username}`);
+        document.getElementById('resetFilterSection').removeAttribute('hidden');
+        document.getElementById('foodTruckFilterForm').setAttribute('hidden', 'hidden');
+        document.getElementById('minRatingFilterForm').setAttribute('hidden', 'hidden');
+
+        // Remove the form validation status indicator after successfully filtering
+        form.classList.remove('was-validated');
     });
 }
 
@@ -55,101 +154,104 @@ function clearForm() {
     document.getElementById('description').value = '';
 }
 
-function createReviewList() {
+function createReview(rev, reviewList) {
+    let review = document.createElement('div');
+    review.setAttribute('class', 'card');
+
+    let reviewHeader = document.createElement('div');
+    reviewHeader.setAttribute('class', 'card-header');
+    reviewHeader.setAttribute('id', rev.rev_id);
+    review.appendChild(reviewHeader);
+
+    let reviewTitle = document.createElement('h2');
+    reviewTitle.setAttribute('class', 'mb-auto');
+    reviewHeader.appendChild(reviewTitle);
+
+    let reviewButton = document.createElement('button');
+    reviewButton.setAttribute('class', 'btn btn-link');
+    reviewButton.setAttribute('type', 'button');
+    reviewButton.setAttribute('data-toggle', 'collapse');
+    reviewButton.setAttribute('data-target', `#reviewBody${rev.rev_id}`);
+    reviewButton.textContent = rev.rev_title;
+    reviewTitle.appendChild(reviewButton);
+
+    let reviewCard = document.createElement('div');
+    reviewCard.setAttribute('id', `reviewBody${rev.rev_id}`);
+    reviewCard.setAttribute('class', 'collapse show');
+    reviewCard.setAttribute('data-parent', '#reviewList');
+    review.appendChild(reviewCard);
+
+    let reviewCardRow = document.createElement('div');
+    reviewCardRow.setAttribute('class', 'row no-gutters');
+    reviewCard.appendChild(reviewCardRow);
+
+    let reviewCardInfoPane = document.createElement('div');
+    reviewCardInfoPane.setAttribute('class', 'col-md-4');
+    reviewCardRow.appendChild(reviewCardInfoPane);
+
+    let customerImage = document.createElement('img');
+    customerImage.setAttribute('src', './icons/customer.svg');
+    customerImage.setAttribute('class', 'customer-icon ml-3 float-left');
+    reviewCardInfoPane.appendChild(customerImage);
+
+    let customerName = document.createElement('span');
+    customerName.setAttribute('class', 'ml-1');
+    customerName.textContent = rev.cust_username;
+    reviewCardInfoPane.appendChild(customerName);
+
+    let rating = document.createElement('p');
+    rating.setAttribute('class', 'mx-auto');
+    for (var i = 0; i < rev.rev_rating; i++) {
+        var star = document.createElement('img');
+        star.setAttribute('src', './icons/star.svg');
+        star.setAttribute('class', 'rating-icon img-fluid');
+        rating.appendChild(star);
+    }
+    reviewCardInfoPane.appendChild(rating);
+
+    let foodTruck = document.createElement('h5');
+    foodTruck.setAttribute('class', 'ml-3');
+    foodTruck.textContent = rev.ft_vendor;
+    reviewCardInfoPane.appendChild(foodTruck);
+
+    let location = document.createElement('h6');
+    location.setAttribute('class', 'ml-3');
+    location.textContent = rev.loc_location;
+    reviewCardInfoPane.appendChild(location);
+
+    let date = document.createElement('h6');
+    date.setAttribute('class', 'ml-3');
+    date.textContent = rev.rev_date;
+    reviewCardInfoPane.appendChild(date);
+
+    let reviewCardBodyPane = document.createElement('div');
+    reviewCardBodyPane.setAttribute('class', 'col-md-8');
+    reviewCardRow.appendChild(reviewCardBodyPane);
+
+    let reviewCardBody = document.createElement('div');
+    reviewCardBody.setAttribute('class', 'card-body');
+    reviewCardBodyPane.appendChild(reviewCardBody);
+
+    let reviewCardBodyText = document.createElement('p');
+    reviewCardBodyText.setAttribute('class','card-text');
+    reviewCardBodyText.textContent = rev.rev_description;
+    reviewCardBody.appendChild(reviewCardBodyText);
+
+    reviewList.appendChild(review);
+
+}
+
+function createReviewList(endpoint) {
     let request = new XMLHttpRequest();
-    request.open('GET', '/api/reviews/', true);
+    request.open('GET', endpoint, true);
     request.addEventListener('load', function () {
         if (request.status >= 200 && request.status < 400) {
             const response = JSON.parse(request.responseText);
 
             let reviewList = document.getElementById('reviewList');
             reviewList.innerHTML = '';
-
-            response.forEach(function (rev) {
-                let review = document.createElement('div');
-                review.setAttribute('class', 'card');
-
-                let reviewHeader = document.createElement('div');
-                reviewHeader.setAttribute('class', 'card-header');
-                reviewHeader.setAttribute('id', rev.rev_id);
-                review.appendChild(reviewHeader);
-
-                let reviewTitle = document.createElement('h2');
-                reviewTitle.setAttribute('class', 'mb-auto');
-                reviewHeader.appendChild(reviewTitle);
-
-                let reviewButton = document.createElement('button');
-                reviewButton.setAttribute('class', 'btn btn-link');
-                reviewButton.setAttribute('type', 'button');
-                reviewButton.setAttribute('data-toggle', 'collapse');
-                reviewButton.setAttribute('data-target', `#reviewBody${rev.rev_id}`);
-                reviewButton.textContent = rev.rev_title;
-                reviewTitle.appendChild(reviewButton);
-
-                let reviewCard = document.createElement('div');
-                reviewCard.setAttribute('id', `reviewBody${rev.rev_id}`);
-                reviewCard.setAttribute('class', 'collapse show');
-                reviewCard.setAttribute('data-parent', '#reviewList');
-                review.appendChild(reviewCard);
-
-                let reviewCardRow = document.createElement('div');
-                reviewCardRow.setAttribute('class', 'row no-gutters');
-                reviewCard.appendChild(reviewCardRow);
-
-                let reviewCardInfoPane = document.createElement('div');
-                reviewCardInfoPane.setAttribute('class', 'col-md-4');
-                reviewCardRow.appendChild(reviewCardInfoPane);
-
-                let customerImage = document.createElement('img');
-                customerImage.setAttribute('src', './icons/customer.svg');
-                customerImage.setAttribute('class', 'customer-icon ml-3 float-left');
-                reviewCardInfoPane.appendChild(customerImage);
-
-                let customerName = document.createElement('span');
-                customerName.setAttribute('class', 'ml-1');
-                customerName.textContent = rev.cust_username;
-                reviewCardInfoPane.appendChild(customerName);
-
-                let rating = document.createElement('p');
-                rating.setAttribute('class', 'mx-auto');
-                for (var i = 0; i < rev.rev_rating; i++) {
-                    var star = document.createElement('img');
-                    star.setAttribute('src', './icons/star.svg');
-                    star.setAttribute('class', 'rating-icon img-fluid');
-                    rating.appendChild(star);
-                }
-                reviewCardInfoPane.appendChild(rating);
-
-                let foodTruck = document.createElement('h5');
-                foodTruck.setAttribute('class', 'ml-3');
-                foodTruck.textContent = rev.ft_vendor;
-                reviewCardInfoPane.appendChild(foodTruck);
-
-                let location = document.createElement('h6');
-                location.setAttribute('class', 'ml-3');
-                location.textContent = rev.loc_location;
-                reviewCardInfoPane.appendChild(location);
-
-                let date = document.createElement('h6');
-                date.setAttribute('class', 'ml-3');
-                date.textContent = rev.rev_date;
-                reviewCardInfoPane.appendChild(date);
-
-                let reviewCardBodyPane = document.createElement('div');
-                reviewCardBodyPane.setAttribute('class', 'col-md-8');
-                reviewCardRow.appendChild(reviewCardBodyPane);
-
-                let reviewCardBody = document.createElement('div');
-                reviewCardBody.setAttribute('class', 'card-body');
-                reviewCardBodyPane.appendChild(reviewCardBody);
-
-                let reviewCardBodyText = document.createElement('p');
-                reviewCardBodyText.setAttribute('class','card-text');
-                reviewCardBodyText.textContent = rev.rev_description;
-                reviewCardBody.appendChild(reviewCardBodyText);
-
-                reviewList.appendChild(review);
-
+            response.forEach(function(rev) {
+                createReview(rev, reviewList)
             });
         } else {
             console.error(`An error occurred: ${request.statusText}`);
@@ -184,7 +286,11 @@ function setCreateButtonState() {
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-    createReviewList();
+    createReviewList('/api/reviews/');
     setCreateButtonState();
     bindSubmitButton();
+    bindResetButton();
+    bindFoodTruckFilterButton();
+    bindMinRatingFilterButton();
+    bindUsernameFilterButton();
 });
