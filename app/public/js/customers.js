@@ -59,6 +59,15 @@ function bindSubmitButton() {
     document.getElementById('submit').addEventListener('click', function (event) {
         event.preventDefault();
 
+        let form = document.getElementById('modalForm');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        }
+        form.classList.add('was-validated');
+
         var request = new XMLHttpRequest();
         var payload = {};
         payload.username = document.getElementById('username').value;
@@ -124,6 +133,8 @@ function clearForm() {
     document.getElementById('firstname').value = '';
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
+    let form = document.getElementById('modalForm');
+    form.classList.remove('was-validated');
 }
 
 function createCustomerList() {
