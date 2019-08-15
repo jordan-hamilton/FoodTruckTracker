@@ -88,7 +88,7 @@ const getFoodTrucks = function (request, response) {
                 'SELECT r2.foodtruck, r2.location, MAX(date) AS last_rev\n' +
                 'FROM Reviews r2\n' +
                 'GROUP BY foodtruck\n' +
-                ') R\n' +
+                ') AS R\n' +
                 'ON R.foodtruck = r.foodtruck\n' +
                 'AND R.last_rev = r.date\n' +
                 'GROUP BY r.foodtruck, r.location\n' +
@@ -238,17 +238,17 @@ const getReviews = function (request, response) {
 const getReviewsByFoodTruck = function (request, response) {
     pool
         .query({
-                dateStrings: true,
-                namedPlaceholders: true,
-                nestTables: '_',
-                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
-                    'FROM Reviews AS rev\n' +
-                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                    'WHERE ft.id = :id;'
-            },
-            {id: request.params.id}
+            dateStrings: true,
+            namedPlaceholders: true,
+            nestTables: '_',
+            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                'FROM Reviews AS rev\n' +
+                'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'WHERE ft.id = :id;'
+        },
+            { id: request.params.id }
         )
         .then(function (rows) {
             console.log(rows);
@@ -264,17 +264,17 @@ const getReviewsByFoodTruck = function (request, response) {
 const getReviewsByRating = function (request, response) {
     pool
         .query({
-                dateStrings: true,
-                namedPlaceholders: true,
-                nestTables: '_',
-                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
-                    'FROM Reviews AS rev\n' +
-                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'WHERE rev.rating >= :minRating;'
-            },
-            {minRating: request.params.minRating}
+            dateStrings: true,
+            namedPlaceholders: true,
+            nestTables: '_',
+            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                'FROM Reviews AS rev\n' +
+                'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                'WHERE rev.rating >= :minRating;'
+        },
+            { minRating: request.params.minRating }
         )
         .then(function (rows) {
             console.log(rows);
@@ -290,17 +290,17 @@ const getReviewsByRating = function (request, response) {
 const getReviewsByUsername = function (request, response) {
     pool
         .query({
-                dateStrings: true,
-                namedPlaceholders: true,
-                nestTables: '_',
-                sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
-                    'FROM Reviews AS rev\n' +
-                    'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
-                    'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
-                    'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                    'WHERE cust.username LIKE :username;'
-            },
-            {username: '%' + request.params.username + '%'}
+            dateStrings: true,
+            namedPlaceholders: true,
+            nestTables: '_',
+            sql: 'SELECT rev.id, cust.username, rev.date, rev.rating, ft.name AS vendor, loc.name as location, rev.title, rev.description\n' +
+                'FROM Reviews AS rev\n' +
+                'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
+                'INNER JOIN Locations AS loc ON loc.id = rev.location\n' +
+                'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
+                'WHERE cust.username LIKE :username;'
+        },
+            { username: '%' + request.params.username + '%' }
         )
         .then(function (rows) {
             console.log(rows);
