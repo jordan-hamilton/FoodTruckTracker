@@ -337,8 +337,8 @@ const getReviewsByRating = function (request, response) {
         });
 };
 
-// Select all reviews from table `Reviews` from a specified username using wildcards
-const getReviewsByUsername = function (request, response) {
+// Select all reviews from table `Reviews` from the specified customer
+const getReviewsByCustomerId = function (request, response) {
     pool
         .query({
             dateStrings: true,
@@ -349,10 +349,10 @@ const getReviewsByUsername = function (request, response) {
                 'INNER JOIN Customers AS cust ON cust.id = rev.customer\n' +
                 'LEFT JOIN Locations AS loc ON loc.id = rev.location\n' +
                 'INNER JOIN FoodTrucks AS ft ON ft.id = rev.foodtruck\n' +
-                'WHERE cust.username LIKE :username\n' +
+                'WHERE cust.id = :id\n' +
                 'ORDER BY rev.date DESC;'
         },
-            { username: '%' + request.params.username + '%' }
+            { id: request.params.id }
         )
         .then(function (rows) {
             console.log(rows);
@@ -398,6 +398,6 @@ module.exports = {
     getReviews,
     getReviewsByFoodTruck,
     getReviewsByRating,
-    getReviewsByUsername,
+    getReviewsByCustomerId,
     addReview
 };

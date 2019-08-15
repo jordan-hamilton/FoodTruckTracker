@@ -58,7 +58,7 @@ router.get('/reviews/food-truck/:id', api.getReviewsByFoodTruck);
 router.get('/reviews/rating/:minRating', api.getReviewsByRating);
 
 /* GET all reviews from a specified username using wildcards. */
-router.get('/reviews/username/:username', api.getReviewsByUsername);
+router.get('/reviews/customer/:id', api.getReviewsByCustomerId);
 
 /* POST a new review */
 router.post('/reviews', api.addReview);
