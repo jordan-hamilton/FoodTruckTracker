@@ -33,17 +33,13 @@ function bindAddButton() {
         });
 
         request.send(JSON.stringify(payload));
+        clearForm();
     }
 }
 
-//TODO: Update for the add button (change the selected option)
 function clearForm() {
-    document.getElementById('food_truck_id').value = '';
-    document.getElementById('location_id').value = '';
-    document.getElementById('date').value = '';
-    document.getElementById('rating').value = '';
-    document.getElementById('title').value = '';
-    document.getElementById('description').value = '';
+    document.getElementById('customer').selectedIndex = 0;
+    document.getElementById('foodTruck').selectedIndex = 0;
     let form = document.getElementById('relationshipForm');
     form.classList.remove('was-validated');
 }
