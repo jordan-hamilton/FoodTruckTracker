@@ -1,4 +1,3 @@
-<button type="button" class="btn btn-primary mb-3" id= "newReviewButton" data-toggle="modal" data-target="#newReview">Write a new food truck review</button>
 <div class="modal fade" id="newReview" tabindex="-1" role="dialog" aria-labelledby="newReviewLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -15,18 +14,18 @@
                             Food Truck
                             <select class="form-control" id="food_truck_id" name="food_truck_id" required>
                                 <option value=""></option>
-                                    {{#each foodTruck}}
-                                        <option value="{{ft_id}}">{{ft_name}}</option>
-                                    {{/each}}
+                                {{#each foodTruck}}
+                                <option value="{{ft_id}}">{{ft_name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="form-group">
                             Location Visited
                             <select class="form-control" id="location_id" name="location_id">
                                 <option value=""></option>
-                                    {{#each location}}
-                                        <option value="{{id}}">{{name}}</option>
-                                    {{/each}}
+                                {{#each location}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="form-row">
@@ -37,7 +36,8 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="col-form-label">Rating
-                                    <input class="form-control" id="rating" type="number" name="rating" min="1" max="5" step="1">
+                                    <input class="form-control" id="rating" type="number" name="rating" min="1" max="5"
+                                        step="1">
                                 </label>
                             </div>
                         </div>
@@ -62,50 +62,53 @@
         </div>
     </div>
 </div>
-<div class="mb-3 col-md-4" id="reviewFilters">
-    <form class="form-inline mb-1 needs-validation" id="foodTruckFilterForm" novalidate>
-        <div class="form-group">
-            <label for="foodTruckFilter">Only show reviews for</label>
-            <select class="form-control mx-sm-2" id="foodTruckFilter" name="foodTruckFilter" required>
-                <option value=""></option>
-                {{#each foodTruck}}
-                    <option value="{{ft_id}}">{{ft_name}}</option>
-                {{/each}}
-            </select>
-            <button class="btn btn-primary btn-sm" id="foodTruckFilterButton" type="button">Filter</button>
-        </div>
-    </form>
-    <form class="form-inline mb-1 needs-validation" id="minRatingFilterForm" novalidate>
-        <div class="form-group">
-            <label for="minRatingFilter">Only show reviews with a rating of at least</label>
-            <select class="form-control mx-sm-2" id="minRatingFilter" name="minRatingFilter" required>
-                <option value=""></option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select> stars
-            <button class="btn btn-primary btn-sm ml-1" id="minRatingFilterButton" type="button">Filter</button>
-        </div>
-    </form>
-    <form class="form-inline mb-1 needs-validation" id="usernameFilterForm" novalidate>
-        <div class="form-group">
-            <label for="usernameFilter">Only show reviews written by</label>
-            <select class="form-control mx-sm-2" id="usernameFilter" name="usernameFilter" required>
-                <option value=""></option>
-                {{#each customer}}
-                    <option value="{{id}}">{{username}}</option>
-                {{/each}}
-            </select>
-            <button class="btn btn-primary btn-sm" id="usernameFilterButton" type="button">Filter</button>
-        </div>
-    </form>
-</div>
-<div class="mb-1 col-md-4" id="resetFilterSection" hidden>
-    <a id="resetFilters" href="#reset">Reset filter</a>
-</div>
 <div class="container">
+    <button type="button" class="btn btn-primary mb-3" id="newReviewButton" data-toggle="modal"
+        data-target="#newReview">Write a new food truck review</button>
+    <div class="mb-3 col-md-4" id="reviewFilters">
+        <form class="form-inline mb-1 needs-validation" id="foodTruckFilterForm" novalidate>
+            <div class="form-group">
+                <label for="foodTruckFilter">Only show reviews for</label>
+                <select class="form-control mx-sm-2" id="foodTruckFilter" name="foodTruckFilter" required>
+                    <option value=""></option>
+                    {{#each foodTruck}}
+                    <option value="{{ft_id}}">{{ft_name}}</option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-primary btn-sm" id="foodTruckFilterButton" type="button">Filter</button>
+            </div>
+        </form>
+        <form class="form-inline mb-1 needs-validation" id="minRatingFilterForm" novalidate>
+            <div class="form-group">
+                <label for="minRatingFilter">Only show reviews with a rating of at least</label>
+                <select class="form-control mx-sm-2" id="minRatingFilter" name="minRatingFilter" required>
+                    <option value=""></option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select> stars
+                <button class="btn btn-primary btn-sm ml-1" id="minRatingFilterButton" type="button">Filter</button>
+            </div>
+        </form>
+        <form class="form-inline mb-1 needs-validation" id="usernameFilterForm" novalidate>
+            <div class="form-group">
+                <label for="usernameFilter">Only show reviews written by</label>
+                <select class="form-control mx-sm-2" id="usernameFilter" name="usernameFilter" required>
+                    <option value=""></option>
+                    {{#each customer}}
+                    <option value="{{id}}">{{username}}</option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-primary btn-sm" id="usernameFilterButton" type="button">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="mb-1 col-md-4" id="resetFilterSection" hidden>
+        <a id="resetFilters" href="#reset">Reset filter</a>
+    </div>
+
     <div class="accordion" id="reviewList"></div>
 </div>
 <script src="./js/reviews.js"></script>

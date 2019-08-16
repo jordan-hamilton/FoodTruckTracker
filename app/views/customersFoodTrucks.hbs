@@ -1,23 +1,24 @@
-<form class="form-inline mb-3 needs-validation" id="relationshipForm" novalidate>
-    <div class="form-group">
-        <label for="customer">Customer </label>
-        <select class="form-control mx-sm-2" id="customer" name="customer" required>
-            <option value=""></option>
-            {{#each customer}}
-                <option value="{{id}}">{{username}}</option>
-            {{/each}}
-        </select>
-        <label for="foodTruck">has eaten at </label>
-        <select class="form-control mx-sm-2" id="foodTruck" name="foodTruck" required>
-            <option value=""></option>
-            {{#each foodTruck}}
-                <option value="{{ft_id}}">{{ft_name}}</option>
-            {{/each}}
-        </select>
-        <button class="btn btn-primary" id="relationshipButton" type="button">Join this food truck's network</button>
-    </div>
-</form>
 <div class="container">
+    <form class="form-inline mb-1 needs-validation" id="relationshipForm" novalidate>
+        <div class="form-group mb-2">
+            <label for="customer">Customer </label>
+            <select class="form-control mx-sm-2" id="customer" name="customer" required>
+                <option value=""></option>
+                {{#each customer}}
+                <option value="{{id}}">{{username}}</option>
+                {{/each}}
+            </select>
+            <label for="foodTruck">has eaten at </label>
+            <select class="form-control mx-sm-2" id="foodTruck" name="foodTruck" required>
+                <option value=""></option>
+                {{#each foodTruck}}
+                <option value="{{ft_id}}">{{ft_name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <button class="btn btn-primary mb-2" id="relationshipButton" type="button">Join this food truck's
+            network</button>
+    </form>
     <div class="accordion" id="relationshipList"></div>
 </div>
 <script src="./js/customersFoodTrucks.js"></script>
