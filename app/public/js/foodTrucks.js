@@ -112,6 +112,17 @@ function bindDeleteButtons() {
     }
 }
 
+function bindCancelButtons() {
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+    document.getElementById('closeButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+}
+
 function clearForm() {
     document.getElementById('name').value = '';
     document.getElementById('description').value = '';
@@ -196,5 +207,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     createFoodTruckList();
     bindAddButton();
     bindSubmitButton();
+    bindCancelButtons();
 });
 

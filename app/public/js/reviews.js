@@ -163,6 +163,17 @@ function bindUsernameFilterButton() {
     });
 }
 
+function bindCancelButtons() {
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+    document.getElementById('closeButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+}
+
 function clearForm() {
     document.getElementById('food_truck_id').value = '';
     document.getElementById('location_id').value = '';
@@ -313,4 +324,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
     bindFoodTruckFilterButton();
     bindMinRatingFilterButton();
     bindUsernameFilterButton();
+    bindCancelButtons();
 });

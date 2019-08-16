@@ -123,6 +123,17 @@ function bindDeleteButtons() {
     }
 }
 
+function bindCancelButtons() {
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+    document.getElementById('closeButton').addEventListener('click', function(event) {
+        let form = document.getElementById('modalForm');
+        form.classList.remove('was-validated');
+    });
+}
+
 function clearForm() {
     document.getElementById('name').value = '';
     document.getElementById('address').value = '';
@@ -214,4 +225,5 @@ document.addEventListener('DOMContentLoaded', function (event) {
     createLocationList();
     bindAddButton();
     bindSubmitButton();
+    bindCancelButtons();
 });
