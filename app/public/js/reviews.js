@@ -1,5 +1,5 @@
 function bindSubmitButton() {
-    document.getElementById('submit').addEventListener('click', function(event) {
+    document.getElementById('submit').addEventListener('click', function (event) {
         event.preventDefault();
 
         let form = document.getElementById('modalForm');
@@ -19,7 +19,15 @@ function bindSubmitButton() {
 
         payload.customer = document.getElementById('customer_id').value;
         payload.food_truck_id = document.getElementById('food_truck_id').value;
-        payload.location_id = document.getElementById('location_id').value;
+
+        let loc_id = document.getElementById('location_id').value;
+
+        if (loc_id == '') {
+            payload.location_id = null;
+        } else {
+            payload.location_id = loc_id;
+        }
+
         payload.date = document.getElementById('date').value;
         payload.rating = document.getElementById('rating').value;
         payload.title = document.getElementById('title').value;
@@ -28,7 +36,7 @@ function bindSubmitButton() {
         request.open('POST', '/api/reviews', true);
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function() {
+        request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
                 handleCustomersFoodTrucks();
             } else {
@@ -49,7 +57,7 @@ function bindSubmitButton() {
         request.open('POST', '/api/customers-food-trucks', true);
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function() {
+        request.addEventListener('load', function () {
             if (request.status >= 200 && request.status < 400) {
                 $('#newReview').modal('hide');
                 clearForm();
@@ -73,7 +81,7 @@ function bindSubmitButton() {
 }
 
 function bindResetButton() {
-    document.getElementById('resetFilters').addEventListener('click', function(event) {
+    document.getElementById('resetFilters').addEventListener('click', function (event) {
         event.preventDefault();
 
         createReviewList('/api/reviews/');
@@ -86,7 +94,7 @@ function bindResetButton() {
 }
 
 function bindFoodTruckFilterButton() {
-    document.getElementById('foodTruckFilterButton').addEventListener('click', function(event) {
+    document.getElementById('foodTruckFilterButton').addEventListener('click', function (event) {
         event.preventDefault();
 
         let form = document.getElementById('foodTruckFilterForm');
@@ -113,7 +121,7 @@ function bindFoodTruckFilterButton() {
 }
 
 function bindMinRatingFilterButton() {
-    document.getElementById('minRatingFilterButton').addEventListener('click', function(event) {
+    document.getElementById('minRatingFilterButton').addEventListener('click', function (event) {
         event.preventDefault();
 
         let form = document.getElementById('minRatingFilterForm');
@@ -139,7 +147,7 @@ function bindMinRatingFilterButton() {
 }
 
 function bindUsernameFilterButton() {
-    document.getElementById('usernameFilterButton').addEventListener('click', function(event) {
+    document.getElementById('usernameFilterButton').addEventListener('click', function (event) {
         event.preventDefault();
 
         let form = document.getElementById('usernameFilterForm');
@@ -264,7 +272,7 @@ function createReview(rev, reviewList) {
     reviewCardBodyPane.appendChild(reviewCardBody);
 
     let reviewCardBodyText = document.createElement('p');
-    reviewCardBodyText.setAttribute('class','card-text');
+    reviewCardBodyText.setAttribute('class', 'card-text');
     reviewCardBodyText.textContent = rev.rev_description;
     reviewCardBody.appendChild(reviewCardBodyText);
 
@@ -281,7 +289,7 @@ function createReviewList(endpoint) {
 
             let reviewList = document.getElementById('reviewList');
             reviewList.innerHTML = '';
-            response.forEach(function(rev) {
+            response.forEach(function (rev) {
                 createReview(rev, reviewList)
             });
         } else {
@@ -297,7 +305,7 @@ function setCreateButtonState() {
 
         // Disable the 'write a review' button if a customer ID wasn't stored in the form from the Handlebars context
         let newReviewButton = document.getElementById('newReviewButton');
-        newReviewButton.setAttribute('disabled','disabled');
+        newReviewButton.setAttribute('disabled', 'disabled');
         newReviewButton.setAttribute('style', 'pointer-events: none;');
 
         // Make a wrapper around the button with a tooltip with instructions to create an account.
@@ -316,7 +324,7 @@ function setCreateButtonState() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
     createReviewList('/api/reviews/');
     setCreateButtonState();
     bindSubmitButton();
