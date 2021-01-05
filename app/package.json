@@ -8,15 +8,15 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "express-session": "^1.16.2",
-    "forever": "~1.0.0",
-    "hbs": "~4.0.4",
-    "http-errors": "~1.6.3",
-    "mariadb": "^2.1.0",
-    "morgan": "~1.9.1",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7"
+    "debug": "^4.3.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "forever": "^3.0.4",
+    "hbs": "^4.1.1",
+    "http-errors": "^1.8.0",
+    "mariadb": "^2.5.2",
+    "morgan": "^1.10.0",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
   }
 }
