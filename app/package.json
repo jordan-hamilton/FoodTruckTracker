@@ -13,7 +13,7 @@
     "express-session": "1.17.1",
     "forever": "3.0.4",
     "hbs": "4.2.0",
-    "http-errors": "1.8.0",
+    "http-errors": "1.8.1",
     "mariadb": "2.5.2",
     "morgan": "1.10.0",
     "request": "2.88.2",
