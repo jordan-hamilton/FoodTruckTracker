@@ -8,7 +8,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "debug": "4.3.3",
+    "debug": "4.3.4",
     "express": "4.17.3",
     "express-session": "1.17.2",
     "forever": "4.0.3",
