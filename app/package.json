@@ -10,7 +10,7 @@
   "dependencies": {
     "debug": "4.3.4",
     "express": "4.19.2",
-    "express-session": "1.17.3",
+    "express-session": "1.18.0",
     "forever": "4.0.3",
     "hbs": "4.2.0",
     "http-errors": "2.0.0",
